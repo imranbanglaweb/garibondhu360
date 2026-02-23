@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ফ্রি ট্রায়াল - গাড়িবন্ধু ৩৬০</title>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/png" href="images/favicon.ico">
+</head>
+<body>
+    <!-- হেডার -->
+    <header class="header">
+        <div class="header-container">
+            <div class="logo">
+                <img src="images/logo.png" alt="গাড়িবন্ধু ৩৬০ লোগো">
+                <div>
+                    <h1>গাড়িবন্ধু ৩৬০</h1>
+                    <p class="tagline">গাড়ির সব খবর, বন্ধুর মতো</p>
+                </div>
+            </div>
+            
+            <nav class="nav-menu">
+                <a href="index.html">হোম</a>
+                <a href="services.html">সেবাসমূহ</a>
+                <a href="features.html">ফিচার</a>
+                <a href="pricing.html">প্রাইসিং</a>
+                <a href="contact.html">যোগাযোগ</a>
+                <a href="login.html" class="btn-login">লগইন</a>
+                <a href="register.html" class="btn-register">রেজিস্টার</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ডেমো সেকশন -->
+    <section class="demo" style="padding: 60px 5%; min-height: 80vh; display: flex; align-items: center;">
+        <div style="max-width: 800px; margin: 0 auto; width: 100%;">
+            <h2 class="section-title" style="color: white;">ফ্রি ট্রায়াল শুরু করুন</h2>
+            <p class="section-subtitle" style="color: rgba(255,255,255,0.9);">১৫ দিনের জন্য সম্পূর্ণ সিস্টেম ব্যবহার করুন, কোন পেমেন্ট লাগবে না</p>
+            
+            <div class="demo-form" style="background-color: white; padding: 40px; border-radius: 10px;">
+                <form action="/demo-request" method="POST">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <input type="text" name="name" placeholder="আপনার নাম *" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" name="email" placeholder="ইমেইল *" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <input type="tel" name="phone" placeholder="ফোন নম্বর *" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="company" placeholder="কোম্পানির নাম *" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <select name="vehicles" required>
+                                <option value="">কতটি গাড়ি আছে? *</option>
+                                <option value="1-10">১-১০টি</option>
+                                <option value="11-50">১১-৫০টি</option>
+                                <option value="51-100">৫১-১০০টি</option>
+                                <option value="100+">১০০+</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <select name="drivers" required>
+                                <option value="">কতজন চালক আছে? *</option>
+                                <option value="1-10">১-১০জন</option>
+                                <option value="11-50">১১-৫০জন</option>
+                                <option value="51-100">৫১-১০০জন</option>
+                                <option value="100+">১০০+</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <select name="interest" required>
+                            <option value="">কোন প্যাকেজে আগ্রহী? *</option>
+                            <option value="starter">স্টার্টার (১-১০ গাড়ি)</option>
+                            <option value="business">বিজনেস (১১-৫০ গাড়ি)</option>
+                            <option value="enterprise">এন্টারপ্রাইজ (৫০+ গাড়ি)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <textarea name="message" rows="3" placeholder="আপনার বিশেষ প্রয়োজন থাকলে লিখুন..."></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn-demo">ফ্রি ট্রায়াল শুরু করুন</button>
+                </form>
+                <p class="small-text" style="text-align: center; margin-top: 15px;">* ফ্রি ট্রায়ালের পর কোন চার্জ হবে না। আপনি চাইলে বন্ধ করে দিতে পারেন।</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- টেস্টিমোনিয়াল (ঐচ্ছিক) -->
+    <section style="padding: 60px 5%; background-color: var(--light-gray);">
+        <h2 class="section-title">আমাদের গ্রাহকরা কী বলছেন</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; max-width: 1200px; margin: 50px auto 0;">
+            
+            <div style="background-color: white; padding: 30px; border-radius: 10px; box-shadow: var(--shadow);">
+                <p style="margin-bottom: 20px;">"গাড়িবন্ধু ৩৬০ ব্যবহার করার পর আমাদের গাড়ি ম্যানেজমেন্ট অনেক সহজ হয়েছে। আগে খাতায় লিখে রাখতাম, এখন ডিজিটালি সব হিসাব রাখি।"</p>
+                <p><strong>- মি. করিম, আরএমজি গার্মেন্টস</strong></p>
+            </div>
+            
+            <div style="background-color: white; padding: 30px; border-radius: 10px; box-shadow: var(--shadow);">
+                <p style="margin-bottom: 20px;">"চালকদের ম্যানেজ করা খুব কষ্ট ছিল। গাড়িবন্ধু ৩৬০ চালু করার পর থেকে চালকদের উপস্থিতি, ট্রিপ সবকিছু ট্র্যাক করতে পারছি।"</p>
+                <p><strong>- মিসেস ফাতেমা, লজিস্টিক কোম্পানি</strong></p>
+            </div>
+            
+            <div style="background-color: white; padding: 30px; border-radius: 10px; box-shadow: var(--shadow);">
+                <p style="margin-bottom: 20px;">"প্রাইসিং খুব সাশ্রয়ী। বিদেশি সফটওয়্যারের মতো সব ফিচার পাচ্ছি, কিন্তু খরচ অনেক কম। খুব ভালো একটি সফটওয়্যার।"</p>
+                <p><strong>- মি. হাসান, কনস্ট্রাকশন ফার্ম</strong></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ফুটার -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-about">
+                <img src="images/logo-white.png" alt="গাড়িবন্ধু ৩৬০">
+                <h4>গাড়িবন্ধু ৩৬০</h4>
+                <p>গাড়ির সব খবর, বন্ধুর মতো। বাংলাদেশের প্রথম সম্পূর্ণ বাংলা ফ্লিট ম্যানেজমেন্ট সিস্টেম।</p>
+            </div>
+            
+            <div class="footer-links">
+                <h4>গুরুত্বপূর্ণ লিঙ্ক</h4>
+                <ul>
+                    <li><a href="about.html">আমাদের সম্পর্কে</a></li>
+                    <li><a href="services.html">সেবাসমূহ</a></li>
+                    <li><a href="features.html">ফিচার</a></li>
+                    <li><a href="pricing.html">প্রাইসিং</a></li>
+                    <li><a href="contact.html">যোগাযোগ</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-support">
+                <h4>সাপোর্ট</h4>
+                <ul>
+                    <li><a href="faq.html">FAQ</a></li>
+                    <li><a href="terms.html">টার্মস অফ সার্ভিস</a></li>
+                    <li><a href="privacy.html">প্রাইভেসি পলিসি</a></li>
+                    <li><a href="refund.html">রিফান্ড পলিসি</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-contact">
+                <h4>যোগাযোগ</h4>
+                <p>📞 ০১৭০০-০০০০০০</p>
+                <p>📧 info@garibondhu360.com</p>
+                <p>📍 ঢাকা, বাংলাদেশ</p>
+                <div class="footer-social">
+                    <a href="#">👍</a>
+                    <a href="#">💼</a>
+                    <a href="#">▶️</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; ২০২৪ গাড়িবন্ধু ৩৬০। সর্বস্বত্ব সংরক্ষিত।</p>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>লগইন - গাড়িবন্ধু ৩৬০</title>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/png" href="images/favicon.ico">
+</head>
+<body>
+    <section class="auth-section">
+        <div class="auth-container">
+            <div class="auth-box">
+                <div class="auth-logo">
+                    <img src="images/logo.png" alt="গাড়িবন্ধু ৩৬০">
+                    <h2>গাড়িবন্ধু ৩৬০</h2>
+                    <p>গাড়ির সব খবর, বন্ধুর মতো</p>
+                </div>
+                
+                <h3>লগইন করুন</h3>
+                
+                <form action="/login" method="POST">
+                    <div class="form-group">
+                        <label for="email">ইমেইল</label>
+                        <input type="email" id="email" name="email" placeholder="superadmin@codeaycanon.com" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password">পাসওয়ার্ড</label>
+                        <input type="password" id="password" name="password" placeholder="********" required>
+                    </div>
+                    
+                    <div class="form-options">
+                        <label>
+                            <input type="checkbox" name="remember"> মনে রাখুন
+                        </label>
+                        <a href="/forgot-password">পাসওয়ার্ড ভুলে গেছেন?</a>
+                    </div>
+                    
+                    <button type="submit" class="btn-submit">লগইন</button>
+                </form>
+                
+                <div class="demo-credentials">
+                    <h4>ডেমো অ্যাকাউন্ট</h4>
+                    <p><strong>সুপার অ্যাডমিন:</strong> superadmin@codeaycanon.com / password</p>
+                    <p><strong>কর্মচারী:</strong> employee@codeaycanon.com / password</p>
+                    <p><strong>চালক:</strong> driver@codeaycanon.com / password</p>
+                </div>
+                
+                <p class="register-link">নতুন ব্যবহারকারী? <a href="register.html">রেজিস্টার করুন</a></p>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

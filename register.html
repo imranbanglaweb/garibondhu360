@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>রেজিস্টার - গাড়িবন্ধু ৩৬০</title>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/png" href="images/favicon.ico">
+</head>
+<body>
+    <section class="auth-section">
+        <div class="auth-container">
+            <div class="auth-box">
+                <div class="auth-logo">
+                    <img src="images/logo.png" alt="গাড়িবন্ধু ৩৬০">
+                    <h2>গাড়িবন্ধু ৩৬০</h2>
+                    <p>গাড়ির সব খবর, বন্ধুর মতো</p>
+                </div>
+                
+                <h3>নতুন অ্যাকাউন্ট খুলুন</h3>
+                
+                <form action="/register" method="POST">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="first_name">নামের প্রথম অংশ *</label>
+                            <input type="text" id="first_name" name="first_name" placeholder="মোঃ" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="last_name">নামের শেষ অংশ *</label>
+                            <input type="text" id="last_name" name="last_name" placeholder="রহিম" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">ইমেইল *</label>
+                        <input type="email" id="email" name="email" placeholder="rahim@example.com" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone">ফোন নম্বর *</label>
+                        <input type="tel" id="phone" name="phone" placeholder="০১৭০০-০০০০০০" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="company">কোম্পানির নাম *</label>
+                        <input type="text" id="company" name="company" placeholder="আপনার কোম্পানি" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password">পাসওয়ার্ড *</label>
+                        <input type="password" id="password" name="password" placeholder="********" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="confirm_password">পাসওয়ার্ড নিশ্চিত করুন *</label>
+                        <input type="password" id="confirm_password" name="confirm_password" placeholder="********" required>
+                    </div>
+                    
+                    <div class="form-options">
+                        <label>
+                            <input type="checkbox" name="terms" required> আমি <a href="terms.html" style="color: var(--primary-orange);">টার্মস অফ সার্ভিস</a> মেনে নিচ্ছি
+                        </label>
+                    </div>
+                    
+                    <button type="submit" class="btn-submit">রেজিস্টার</button>
+                </form>
+                
+                <p class="register-link">ইতিমধ্যে অ্যাকাউন্ট আছে? <a href="login.html">লগইন করুন</a></p>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
