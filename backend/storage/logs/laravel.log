@@ -107,3 +107,111 @@
 #35 D:/TMSPROJECT/htdocs/garibondhu360/backend/artisan(24): Illuminate/Foundation/Console/Kernel->handle(Object(Symfony/Component/Console/Input/ArgvInput), Object(Symfony/Component/Console/Output/ConsoleOutput))
 #36 {main}
 "} 
+[2026-02-25 15:31:45] laravel.EMERGENCY: Unable to create configured logger. Using emergency logger. {"exception":"[object] (InvalidArgumentException(code: 0): Log [] is not defined. at D:/TMSPROJECT/htdocs/garibondhu360/backend/vendor/laravel/framework/src/Illuminate/Log/LogManager.php:212)
+[stacktrace]
+#0 D:/TMSPROJECT/htdocs/garibondhu360/backend/vendor/laravel/framework/src/Illuminate/Log/LogManager.php(137): Illuminate/Log/LogManager->resolve(NULL, NULL)
+#1 D:/TMSPROJECT/htdocs/garibondhu360/backend/vendor/laravel/framework/src/Illuminate/Log/LogManager.php(124): Illuminate/Log/LogManager->get(NULL)
+#2 D:/TMSPROJECT/htdocs/garibondhu360/backend/vendor/laravel/framework/src/Illuminate/Log/LogManager.php(681): Illuminate/Log/LogManager->driver()
+#3 D:/TMSPROJECT/htdocs/garibondhu360/backend/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(317): Illuminate/Log/LogManager->error('syntax error, u...', Array)
+#4 D:/TMSPROJECT/htdocs/garibondhu360/backend/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(278): Illuminate/Foundation/Exceptions/Handler->reportThrowable(Object(ParseError))
+#5 D:/TMSPROJECT/htdocs/garibondhu360/backend/vendor/nunomaduro/collision/src/Adapters/Laravel/ExceptionHandler.php(46): Illuminate/Foundation/Exceptions/Handler->report(Object(ParseError))
+#6 D:/TMSPROJECT/htdocs/garibondhu360/backend/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(523): NunoMaduro/Collision/Adapters/Laravel/ExceptionHandler->report(Object(ParseError))
+#7 D:/TMSPROJECT/htdocs/garibondhu360/backend/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(203): Illuminate/Foundation/Console/Kernel->reportException(Object(ParseError))
+#8 D:/TMSPROJECT/htdocs/garibondhu360/backend/artisan(24): Illuminate/Foundation/Console/Kernel->handle(Object(Symfony/Component/Console/Input/ArgvInput), Object(Symfony/Component/Console/Output/ConsoleOutput))
+#9 {main}
+"} 
+[2026-02-25 15:31:45] laravel.ERROR: syntax error, unexpected token "public", expecting "{" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"public\", expecting \"{\" at D:/TMSPROJECT/htdocs/garibondhu360/backend/app/Providers/AppServiceProvider.php:12)
+[stacktrace]
+#0 D:/TMSPROJECT/htdocs/garibondhu360/backend/vendor/composer/ClassLoader.php(427): Composer/Autoload/{closure}('D://TMSPROJECT//h...')
+#1 D:/TMSPROJECT/htdocs/garibondhu360/backend/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(880): Composer/Autoload/ClassLoader->loadClass('App//Providers//A...')
+#2 D:/TMSPROJECT/htdocs/garibondhu360/backend/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(814): Illuminate/Foundation/Application->resolveProvider('App//Providers//A...')
+#3 D:/TMSPROJECT/htdocs/garibondhu360/backend/vendor/laravel/framework/src/Illuminate/Foundation/ProviderRepository.php(75): Illuminate/Foundation/Application->register('App//Providers//A...')
+#4 D:/TMSPROJECT/htdocs/garibondhu360/backend/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(794): Illuminate/Foundation/ProviderRepository->load(Array)
+#5 D:/TMSPROJECT/htdocs/garibondhu360/backend/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/RegisterProviders.php(17): Illuminate/Foundation/Application->registerConfiguredProviders()
+#6 D:/TMSPROJECT/htdocs/garibondhu360/backend/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(286): Illuminate/Foundation/Bootstrap/RegisterProviders->bootstrap(Object(Illuminate/Foundation/Application))
+#7 D:/TMSPROJECT/htdocs/garibondhu360/backend/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(447): Illuminate/Foundation/Application->bootstrapWith(Array)
+#8 D:/TMSPROJECT/htdocs/garibondhu360/backend/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(199): Illuminate/Foundation/Console/Kernel->bootstrap()
+#9 D:/TMSPROJECT/htdocs/garibondhu360/backend/artisan(24): Illuminate/Foundation/Console/Kernel->handle(Object(Symfony/Component/Console/Input/ArgvInput), Object(Symfony/Component/Console/Output/ConsoleOutput))
+#10 {main}
+"} 
+[2026-02-25 15:32:55] laravel.EMERGENCY: Unable to create configured logger. Using emergency logger. {"exception":"[object] (InvalidArgumentException(code: 0): Log [] is not defined. at D:/TMSPROJECT/htdocs/garibondhu360/backend/vendor/laravel/framework/src/Illuminate/Log/LogManager.php:212)
+[stacktrace]
+#0 D:/TMSPROJECT/htdocs/garibondhu360/backend/vendor/laravel/framework/src/Illuminate/Log/LogManager.php(137): Illuminate/Log/LogManager->resolve(NULL, NULL)
+#1 D:/TMSPROJECT/htdocs/garibondhu360/backend/vendor/laravel/framework/src/Illuminate/Log/LogManager.php(124): Illuminate/Log/LogManager->get(NULL)
+#2 D:/TMSPROJECT/htdocs/garibondhu360/backend/vendor/laravel/framework/src/Illuminate/Log/LogManager.php(681): Illuminate/Log/LogManager->driver()
+#3 D:/TMSPROJECT/htdocs/garibondhu360/backend/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(317): Illuminate/Log/LogManager->error('syntax error, u...', Array)
+#4 D:/TMSPROJECT/htdocs/garibondhu360/backend/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(278): Illuminate/Foundation/Exceptions/Handler->reportThrowable(Object(ParseError))
+#5 D:/TMSPROJECT/htdocs/garibondhu360/backend/vendor/nunomaduro/collision/src/Adapters/Laravel/ExceptionHandler.php(46): Illuminate/Foundation/Exceptions/Handler->report(Object(ParseError))
+#6 D:/TMSPROJECT/htdocs/garibondhu360/backend/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(523): NunoMaduro/Collision/Adapters/Laravel/ExceptionHandler->report(Object(ParseError))
+#7 D:/TMSPROJECT/htdocs/garibondhu360/backend/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(203): Illuminate/Foundation/Console/Kernel->reportException(Object(ParseError))
+#8 D:/TMSPROJECT/htdocs/garibondhu360/backend/artisan(24): Illuminate/Foundation/Console/Kernel->handle(Object(Symfony/Component/Console/Input/ArgvInput), Object(Symfony/Component/Console/Output/ConsoleOutput))
+#9 {main}
+"} 
+[2026-02-25 15:32:55] laravel.ERROR: syntax error, unexpected token "public", expecting "{" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"public\", expecting \"{\" at D:/TMSPROJECT/htdocs/garibondhu360/backend/app/Providers/AppServiceProvider.php:12)
+[stacktrace]
+#0 D:/TMSPROJECT/htdocs/garibondhu360/backend/vendor/composer/ClassLoader.php(427): Composer/Autoload/{closure}('D://TMSPROJECT//h...')
+#1 D:/TMSPROJECT/htdocs/garibondhu360/backend/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(880): Composer/Autoload/ClassLoader->loadClass('App//Providers//A...')
+#2 D:/TMSPROJECT/htdocs/garibondhu360/backend/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(814): Illuminate/Foundation/Application->resolveProvider('App//Providers//A...')
+#3 D:/TMSPROJECT/htdocs/garibondhu360/backend/vendor/laravel/framework/src/Illuminate/Foundation/ProviderRepository.php(75): Illuminate/Foundation/Application->register('App//Providers//A...')
+#4 D:/TMSPROJECT/htdocs/garibondhu360/backend/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(794): Illuminate/Foundation/ProviderRepository->load(Array)
+#5 D:/TMSPROJECT/htdocs/garibondhu360/backend/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/RegisterProviders.php(17): Illuminate/Foundation/Application->registerConfiguredProviders()
+#6 D:/TMSPROJECT/htdocs/garibondhu360/backend/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(286): Illuminate/Foundation/Bootstrap/RegisterProviders->bootstrap(Object(Illuminate/Foundation/Application))
+#7 D:/TMSPROJECT/htdocs/garibondhu360/backend/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(447): Illuminate/Foundation/Application->bootstrapWith(Array)
+#8 D:/TMSPROJECT/htdocs/garibondhu360/backend/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(199): Illuminate/Foundation/Console/Kernel->bootstrap()
+#9 D:/TMSPROJECT/htdocs/garibondhu360/backend/artisan(24): Illuminate/Foundation/Console/Kernel->handle(Object(Symfony/Component/Console/Input/ArgvInput), Object(Symfony/Component/Console/Output/ConsoleOutput))
+#10 {main}
+"} 
+[2026-02-25 15:33:34] laravel.EMERGENCY: Unable to create configured logger. Using emergency logger. {"exception":"[object] (InvalidArgumentException(code: 0): Log [] is not defined. at D:/TMSPROJECT/htdocs/garibondhu360/backend/vendor/laravel/framework/src/Illuminate/Log/LogManager.php:212)
+[stacktrace]
+#0 D:/TMSPROJECT/htdocs/garibondhu360/backend/vendor/laravel/framework/src/Illuminate/Log/LogManager.php(137): Illuminate/Log/LogManager->resolve(NULL, NULL)
+#1 D:/TMSPROJECT/htdocs/garibondhu360/backend/vendor/laravel/framework/src/Illuminate/Log/LogManager.php(124): Illuminate/Log/LogManager->get(NULL)
+#2 D:/TMSPROJECT/htdocs/garibondhu360/backend/vendor/laravel/framework/src/Illuminate/Log/LogManager.php(681): Illuminate/Log/LogManager->driver()
+#3 D:/TMSPROJECT/htdocs/garibondhu360/backend/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(317): Illuminate/Log/LogManager->error('syntax error, u...', Array)
+#4 D:/TMSPROJECT/htdocs/garibondhu360/backend/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(278): Illuminate/Foundation/Exceptions/Handler->reportThrowable(Object(ParseError))
+#5 D:/TMSPROJECT/htdocs/garibondhu360/backend/vendor/nunomaduro/collision/src/Adapters/Laravel/ExceptionHandler.php(46): Illuminate/Foundation/Exceptions/Handler->report(Object(ParseError))
+#6 D:/TMSPROJECT/htdocs/garibondhu360/backend/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(523): NunoMaduro/Collision/Adapters/Laravel/ExceptionHandler->report(Object(ParseError))
+#7 D:/TMSPROJECT/htdocs/garibondhu360/backend/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(203): Illuminate/Foundation/Console/Kernel->reportException(Object(ParseError))
+#8 D:/TMSPROJECT/htdocs/garibondhu360/backend/artisan(24): Illuminate/Foundation/Console/Kernel->handle(Object(Symfony/Component/Console/Input/ArgvInput), Object(Symfony/Component/Console/Output/ConsoleOutput))
+#9 {main}
+"} 
+[2026-02-25 15:33:34] laravel.ERROR: syntax error, unexpected token "public", expecting "{" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"public\", expecting \"{\" at D:/TMSPROJECT/htdocs/garibondhu360/backend/app/Providers/AppServiceProvider.php:12)
+[stacktrace]
+#0 D:/TMSPROJECT/htdocs/garibondhu360/backend/vendor/composer/ClassLoader.php(427): Composer/Autoload/{closure}('D://TMSPROJECT//h...')
+#1 D:/TMSPROJECT/htdocs/garibondhu360/backend/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(880): Composer/Autoload/ClassLoader->loadClass('App//Providers//A...')
+#2 D:/TMSPROJECT/htdocs/garibondhu360/backend/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(814): Illuminate/Foundation/Application->resolveProvider('App//Providers//A...')
+#3 D:/TMSPROJECT/htdocs/garibondhu360/backend/vendor/laravel/framework/src/Illuminate/Foundation/ProviderRepository.php(75): Illuminate/Foundation/Application->register('App//Providers//A...')
+#4 D:/TMSPROJECT/htdocs/garibondhu360/backend/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(794): Illuminate/Foundation/ProviderRepository->load(Array)
+#5 D:/TMSPROJECT/htdocs/garibondhu360/backend/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/RegisterProviders.php(17): Illuminate/Foundation/Application->registerConfiguredProviders()
+#6 D:/TMSPROJECT/htdocs/garibondhu360/backend/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(286): Illuminate/Foundation/Bootstrap/RegisterProviders->bootstrap(Object(Illuminate/Foundation/Application))
+#7 D:/TMSPROJECT/htdocs/garibondhu360/backend/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(447): Illuminate/Foundation/Application->bootstrapWith(Array)
+#8 D:/TMSPROJECT/htdocs/garibondhu360/backend/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(199): Illuminate/Foundation/Console/Kernel->bootstrap()
+#9 D:/TMSPROJECT/htdocs/garibondhu360/backend/artisan(24): Illuminate/Foundation/Console/Kernel->handle(Object(Symfony/Component/Console/Input/ArgvInput), Object(Symfony/Component/Console/Output/ConsoleOutput))
+#10 {main}
+"} 
+[2026-02-25 15:33:37] laravel.EMERGENCY: Unable to create configured logger. Using emergency logger. {"exception":"[object] (InvalidArgumentException(code: 0): Log [] is not defined. at D:/TMSPROJECT/htdocs/garibondhu360/backend/vendor/laravel/framework/src/Illuminate/Log/LogManager.php:212)
+[stacktrace]
+#0 D:/TMSPROJECT/htdocs/garibondhu360/backend/vendor/laravel/framework/src/Illuminate/Log/LogManager.php(137): Illuminate/Log/LogManager->resolve(NULL, NULL)
+#1 D:/TMSPROJECT/htdocs/garibondhu360/backend/vendor/laravel/framework/src/Illuminate/Log/LogManager.php(124): Illuminate/Log/LogManager->get(NULL)
+#2 D:/TMSPROJECT/htdocs/garibondhu360/backend/vendor/laravel/framework/src/Illuminate/Log/LogManager.php(681): Illuminate/Log/LogManager->driver()
+#3 D:/TMSPROJECT/htdocs/garibondhu360/backend/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(317): Illuminate/Log/LogManager->error('syntax error, u...', Array)
+#4 D:/TMSPROJECT/htdocs/garibondhu360/backend/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(278): Illuminate/Foundation/Exceptions/Handler->reportThrowable(Object(ParseError))
+#5 D:/TMSPROJECT/htdocs/garibondhu360/backend/vendor/nunomaduro/collision/src/Adapters/Laravel/ExceptionHandler.php(46): Illuminate/Foundation/Exceptions/Handler->report(Object(ParseError))
+#6 D:/TMSPROJECT/htdocs/garibondhu360/backend/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(523): NunoMaduro/Collision/Adapters/Laravel/ExceptionHandler->report(Object(ParseError))
+#7 D:/TMSPROJECT/htdocs/garibondhu360/backend/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(203): Illuminate/Foundation/Console/Kernel->reportException(Object(ParseError))
+#8 D:/TMSPROJECT/htdocs/garibondhu360/backend/artisan(24): Illuminate/Foundation/Console/Kernel->handle(Object(Symfony/Component/Console/Input/ArgvInput), Object(Symfony/Component/Console/Output/ConsoleOutput))
+#9 {main}
+"} 
+[2026-02-25 15:33:37] laravel.ERROR: syntax error, unexpected token "public", expecting "{" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"public\", expecting \"{\" at D:/TMSPROJECT/htdocs/garibondhu360/backend/app/Providers/AppServiceProvider.php:12)
+[stacktrace]
+#0 D:/TMSPROJECT/htdocs/garibondhu360/backend/vendor/composer/ClassLoader.php(427): Composer/Autoload/{closure}('D://TMSPROJECT//h...')
+#1 D:/TMSPROJECT/htdocs/garibondhu360/backend/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(880): Composer/Autoload/ClassLoader->loadClass('App//Providers//A...')
+#2 D:/TMSPROJECT/htdocs/garibondhu360/backend/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(814): Illuminate/Foundation/Application->resolveProvider('App//Providers//A...')
+#3 D:/TMSPROJECT/htdocs/garibondhu360/backend/vendor/laravel/framework/src/Illuminate/Foundation/ProviderRepository.php(75): Illuminate/Foundation/Application->register('App//Providers//A...')
+#4 D:/TMSPROJECT/htdocs/garibondhu360/backend/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(794): Illuminate/Foundation/ProviderRepository->load(Array)
+#5 D:/TMSPROJECT/htdocs/garibondhu360/backend/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/RegisterProviders.php(17): Illuminate/Foundation/Application->registerConfiguredProviders()
+#6 D:/TMSPROJECT/htdocs/garibondhu360/backend/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(286): Illuminate/Foundation/Bootstrap/RegisterProviders->bootstrap(Object(Illuminate/Foundation/Application))
+#7 D:/TMSPROJECT/htdocs/garibondhu360/backend/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(447): Illuminate/Foundation/Application->bootstrapWith(Array)
+#8 D:/TMSPROJECT/htdocs/garibondhu360/backend/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(199): Illuminate/Foundation/Console/Kernel->bootstrap()
+#9 D:/TMSPROJECT/htdocs/garibondhu360/backend/artisan(24): Illuminate/Foundation/Console/Kernel->handle(Object(Symfony/Component/Console/Input/ArgvInput), Object(Symfony/Component/Console/Output/ConsoleOutput))
+#10 {main}
+"} 
