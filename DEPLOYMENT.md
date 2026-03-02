@@ -165,7 +165,7 @@ Run these in cPanel Terminal:
 # Generate key
 php artisan key:generate
 
-# Clear caches
+# Clear caches (use correct commands)
 php artisan config:clear
 php artisan cache:clear
 php artisan view:clear
