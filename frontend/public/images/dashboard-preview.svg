@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" fill="none">
+  <rect width="800" height="500" fill="#f5f7fa"/>
+  <rect x="50" y="30" width="150" height="40" rx="5" fill="#FF6B35"/>
+  <rect x="220" y="30" width="100" height="40" rx="5" fill="#e0e0e0"/>
+  <rect x="340" y="30" width="100" height="40" rx="5" fill="#e0e0e0"/>
+  <rect x="460" y="30" width="100" height="40" rx="5" fill="#e0e0e0"/>
+  <rect x="580" y="30" width="100" height="40" rx="5" fill="#e0e0e0"/>
+  <rect x="700" y="30" width="50" height="40" rx="5" fill="#e0e0e0"/>
+  <rect x="50" y="100" width="180" height="120" rx="10" fill="white" stroke="#e0e0e0"/>
+  <text x="140" y="150" text-anchor="middle" font-family="Arial" font-size="14" fill="#666">Vehicles</text>
+  <text x="140" y="180" text-anchor="middle" font-family="Arial" font-size="28" font-weight="bold" fill="#FF6B35">৫০</text>
+  <rect x="250" y="100" width="180" height="120" rx="10" fill="white" stroke="#e0e0e0"/>
+  <text x="340" y="150" text-anchor="middle" font-family="Arial" font-size="14" fill="#666">Drivers</text>
+  <text x="340" y="180" text-anchor="middle" font-family="Arial" font-size="28" font-weight="bold" fill="#FF6B35">২৫</text>
+  <rect x="450" y="100" width="180" height="120" rx="10" fill="white" stroke="#e0e0e0"/>
+  <text x="540" y="150" text-anchor="middle" font-family="Arial" font-size="14" fill="#666">Requisitions</text>
+  <text x="540" y="180" text-anchor="middle" font-family="Arial" font-size="28" font-weight="bold" fill="#FF6B35">১২</text>
+  <rect x="650" y="100" width="100" height="120" rx="10" fill="white" stroke="#e0e0e0"/>
+  <text x="700" y="150" text-anchor="middle" font-family="Arial" font-size="14" fill="#666">Pending</text>
+  <text x="700" y="180" text-anchor="middle" font-family="Arial" font-size="28" font-weight="bold" fill="#FF6B35">৩</text>
+  <rect x="50" y="240" width="350" height="200" rx="10" fill="white" stroke="#e0e0e0"/>
+  <text x="70" y="270" font-family="Arial" font-size="14" font-weight="bold" fill="#333">Recent Requisitions</text>
+  <line x1="50" y1="290" x2="380" y2="290" stroke="#e0e0e0"/>
+  <rect x="70" y="310" width="200" height="20" rx="3" fill="#f5f7fa"/>
+  <rect x="300" y="310" width="80" height="20" rx="3" fill="#4CAF50"/>
+  <rect x="70" y="340" width="200" height="20" rx="3" fill="#f5f7fa"/>
+  <rect x="300" y="340" width="80" height="20" rx="3" fill="#FF6B35"/>
+  <rect x="70" y="370" width="200" height="20" rx="3" fill="#f5f7fa"/>
+  <rect x="300" y="370" width="80" height="20" rx="3" fill="#2196F3"/>
+  <rect x="420" y="240" width="330" height="200" rx="10" fill="white" stroke="#e0e0e0"/>
+  <text x="440" y="270" font-family="Arial" font-size="14" font-weight="bold" fill="#333">Fleet Status</text>
+  <circle cx="520" cy="330" r="40" fill="#FF6B35"/>
+  <text x="520" y="340" text-anchor="middle" font-family="Arial" font-size="24" font-weight="bold" fill="white">৮০%</text>
+  <text x="585" y="330" font-family="Arial" font-size="12" fill="#666">Active</text>
+  <circle cx="520" cy="380" r="30" fill="#4CAF50"/>
+  <text x="520" y="385" text-anchor="middle" font-family="Arial" font-size="18" font-weight="bold" fill="white">৪০</text>
+  <text x="585" y="380" font-family="Arial" font-size="12" fill="#666">Available</text>
+  <circle cx="680" cy="330" r="25" fill="#2196F3"/>
+  <text x="680" y="337" text-anchor="middle" font-family="Arial" font-size="16" font-weight="bold" fill="white">৫</text>
+  <text x="720" y="330" font-family="Arial" font-size="12" fill="#666">Service</text>
+</svg>

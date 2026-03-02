@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 60" fill="none">
+  <rect width="200" height="60" rx="10" fill="#FF6B35"/>
+  <text x="70" y="38" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="white">গাড়িবন্ধু ৩৬০</text>
+  <circle cx="30" cy="30" r="18" fill="white" opacity="0.3"/>
+  <path d="M22 30 L30 22 L38 30 L30 38 Z" fill="white"/>
+</svg>

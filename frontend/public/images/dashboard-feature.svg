@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" fill="none">
+  <rect width="600" height="400" fill="#f5f7fa"/>
+  <rect x="30" y="20" width="120" height="30" rx="5" fill="#FF6B35"/>
+  <rect x="170" y="20" width="80" height="30" rx="5" fill="#e0e0e0"/>
+  <rect x="270" y="20" width="80" height="30" rx="5" fill="#e0e0e0"/>
+  <rect x="370" y="20" width="80" height="30" rx="5" fill="#e0e0e0"/>
+  <rect x="470" y="20" width="80" height="30" rx="5" fill="#e0e0e0"/>
+  <rect x="30" y="70" width="250" height="150" rx="10" fill="white" stroke="#e0e0e0"/>
+  <text x="155" y="120" text-anchor="middle" font-family="Arial" font-size="16" fill="#333">Requisitions</text>
+  <rect x="50" y="140" width="210" height="25" rx="3" fill="#f5f7fa"/>
+  <rect x="50" y="170" width="210" height="25" rx="3" fill="#f5f7fa"/>
+  <rect x="300" y="70" width="270" height="150" rx="10" fill="white" stroke="#e0e0e0"/>
+  <text x="435" y="100" text-anchor="middle" font-family="Arial" font-size="14" fill="#333">Pending Requests</text>
+  <rect x="320" y="115" width="230" height="30" rx="5" fill="#FF6B35" opacity="0.2"/>
+  <text x="435" y="135" text-anchor="middle" font-family="Arial" font-size="14" fill="#FF6B35">৫ Pending</text>
+  <rect x="320" y="155" width="230" height="30" rx="5" fill="#4CAF50" opacity="0.2"/>
+  <text x="435" y="175" text-anchor="middle" font-family="Arial" font-size="14" fill="#4CAF50">১২ Approved</text>
+  <rect x="30" y="240" width="170" height="130" rx="10" fill="white" stroke="#e0e0e0"/>
+  <text x="115" y="280" text-anchor="middle" font-family="Arial" font-size="14" fill="#666">Total Vehicles</text>
+  <text x="115" y="330" text-anchor="middle" font-family="Arial" font-size="36" font-weight="bold" fill="#FF6B35">৫০</text>
+  <rect x="220" y="240" width="170" height="130" rx="10" fill="white" stroke="#e0e0e0"/>
+  <text x="305" y="280" text-anchor="middle" font-family="Arial" font-size="14" fill="#666">Active Drivers</text>
+  <text x="305" y="330" text-anchor="middle" font-family="Arial" font-size="36" font-weight="bold" fill="#2196F3">২৫</text>
+  <rect x="410" y="240" width="160" height="130" rx="10" fill="white" stroke="#e0e0e0"/>
+  <text x="490" y="280" text-anchor="middle" font-family="Arial" font-size="14" fill="#666">Total Users</text>
+  <text x="490" y="330" text-anchor="middle" font-family="Arial" font-size="36" font-weight="bold" fill="#4CAF50">১০০</text>
+</svg>

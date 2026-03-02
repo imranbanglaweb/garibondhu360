@@ -1,8 +1,12 @@
 import type { Metadata } from 'next';
 import { Hind_Siliguri } from 'next/font/google';
 import { AuthProvider } from './context/AuthContext';
+import { LoadingProvider } from './context/LoadingContext';
 import './globals.css';
 import { Toaster } from 'react-hot-toast';
+import Preloader from './components/Preloader';
+import ScrollProgress from './components/ScrollProgress';
+import BackToTop from './components/BackToTop';
 
 const hindSiliguri = Hind_Siliguri({
   subsets: ['latin'],
@@ -22,10 +26,15 @@ export default function RootLayout({
   return (
     <html lang="bn">
       <body className={hindSiliguri.className}>
-        <AuthProvider>
-          <Toaster position="top-right" />
-          {children}
-        </AuthProvider>
+        <ScrollProgress />
+        <LoadingProvider>
+          <AuthProvider>
+            <Preloader />
+            <Toaster position="top-right" />
+            <BackToTop />
+            {children}
+          </AuthProvider>
+        </LoadingProvider>
       </body>
     </html>
   );
