@@ -11,6 +11,7 @@
     </IfModule>
 
     RewriteEngine On
+    RewriteBase /backend/public/
 
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .

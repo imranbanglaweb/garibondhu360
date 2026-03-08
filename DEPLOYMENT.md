@@ -12,6 +12,33 @@ This guide covers deploying both the Laravel backend and Next.js frontend to cPa
 
 ---
 
+## Project Structure
+
+For separate backend directory, the structure should be:
+```
+public_html/
+├── index.html              # Frontend static files
+├── _next/                  # Next.js static assets
+├── images/
+├── contact.html
+├── pricing.html
+├── .htaccess               # Main routing rules
+├── backend/                # Laravel Backend
+│   ├── app/
+│   ├── bootstrap/
+│   ├── config/
+│   ├── public/             # Backend entry point
+│   │   ├── index.php
+│   │   └── .htaccess
+│   ├── routes/
+│   ├── vendor/
+│   ├── .env
+│   ├── artisan
+│   └── composer.json
+```
+
+---
+
 ## Step 1: Build the Frontend
 
 ```bash
@@ -21,7 +48,7 @@ cd frontend
 # Install dependencies
 npm install
 
-# Build for production
+# Build for production (static export)
 npm run build
 ```
 
@@ -61,27 +88,82 @@ php artisan route:clear
 3. Create user and assign to database
 4. Import your database dump (if available)
 
-### 3.2 Upload Backend Files
-1. Compress `backend` folder as `backend.zip`
-2. Upload to `public_html/` via cPanel File Manager
-3. Extract the zip file
-4. Move all contents from `backend/` folder to `public_html/`
-5. The structure should be:
+### 3.2 Upload Frontend Static Files
+After running `npm run build`:
+1. Navigate to `frontend/out` folder
+2. Upload ALL contents to `public_html/`
+3. Keep the `_next` folder as-is (Next.js static files)
+
+### 3.3 Upload Backend Files
+1. Create a folder named `backend` in `public_html/`
+2. Upload ALL contents from `backend/` folder to `public_html/backend/`
+   - EXCLUDE: `.git` folder if exists
+   - INCLUDE: `.env` file with production settings
+3. The structure should be:
    ```
-   public_html/
+   public_html/backend/
    ├── app/
    ├── bootstrap/
    ├── config/
-   ├── public/
+   ├── public/        # Entry point for API
    ├── routes/
    ├── vendor/
+   ├── storage/
    ├── .env
    ├── artisan
    └── composer.json
    ```
 
-### 3.3 Configure Backend
-1. Edit `.env` file in `public_html/`:
+### 3.4 Configure Backend .htaccess
+In `public_html/backend/public/.htaccess`, ensure Laravel routing is correct:
+```apache
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /backend/public/
+    
+    # Handle Authorization Header
+    RewriteCond %{HTTP:Authorization} .
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+    # Redirect Trailing Slashes If Not A Folder...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{URI} (.+)/$
+    RewriteRule ^ %1 [L,R=301]
+
+    # Send Requests To Front Controller...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ index.php [L]
+</IfModule>
+```
+
+### 3.5 Configure Main .htaccess
+Create/edit `public_html/.htaccess`:
+```apache
+<IfModule mod_headers.c>
+    Header set Access-Control-Allow-Origin "*"
+    Header set Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS"
+    Header set Access-Control-Allow-Headers "Content-Type, Authorization, X-Requested-With"
+</IfModule>
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+
+    # API requests go to backend Laravel
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^api/(.*)$ backend/public/index.php [L]
+
+    # Frontend static files (Next.js)
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)$ index.html [L]
+</IfModule>
+```
+
+### 3.6 Configure Backend .env
+Edit `public_html/backend/.env`:
 ```env
 APP_NAME="Garibondhu360"
 APP_ENV=production
@@ -99,80 +181,52 @@ SESSION_DRIVER=file
 CACHE_DRIVER=file
 ```
 
-2. Set proper permissions:
-   - Folders: `755`
-   - Storage folder: `775`
-
-### 3.4 Upload Frontend Static Files
-After running `npm run build`:
-1. Navigate to `frontend/out` folder
-2. Upload ALL contents to `public_html/`
-3. Keep the `_next` folder as-is (Next.js static files)
-
 ---
 
-## Step 4: Configure .htaccess
-
-Create/edit `.htaccess` in `public_html/`:
-
-```apache
-<IfModule mod_rewrite.c>
-    RewriteEngine On
-    RewriteBase /
-    
-    # API requests go to Laravel
-    RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteRule ^api/(.*)$ public/index.php [L]
-    
-    # Frontend static files (Next.js)
-    RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteRule ^(.*)$ index.html [L]
-</IfModule>
-```
-
----
-
-## Step 5: Update Frontend API Configuration
+## Step 4: Update Frontend API Configuration
 
 Edit `frontend/app/services/api.ts` before building:
-
 ```typescript
 const API_URL = 'https://yourdomain.com/api';
 ```
 
 ---
 
-## Step 6: Set Permissions
+## Step 5: Set Permissions
 
 In cPanel Terminal or SSH:
 
 ```bash
+# Frontend files
 find /home/username/public_html -type f -chmod 644
 find /home/username/public_html -type d -chmod 755
-chmod -R 775 /home/username/public_html/storage
-chmod -R 775 /home/username/public_html/bootstrap/cache
+
+# Backend files
+chmod -R 755 /home/username/public_html/backend/
+chmod -R 775 /home/username/public_html/backend/storage
+chmod -R 775 /home/username/public_html/backend/bootstrap/cache
 ```
 
 ---
 
-## Step 7: Important Commands After Upload
+## Step 6: Important Commands After Upload
 
 Run these in cPanel Terminal:
 
 ```bash
+cd /home/username/public_html/backend
+
 # Generate key
 php artisan key:generate
 
-# Clear caches (use correct commands)
+# Clear caches
 php artisan config:clear
 php artisan cache:clear
 php artisan view:clear
 php artisan route:clear
 php artisan optimize
 
-# Set storage link (if not already)
+# Set storage link
 php artisan storage:link
 ```
 
@@ -181,13 +235,14 @@ php artisan storage:link
 ## Troubleshooting
 
 ### 500 Error
-- Check `.env` file exists and has correct values
+- Check `.env` file exists in `backend/` and has correct values
 - Run `php artisan config:clear`
 - Check error logs in cPanel
 
 ### API Not Working
 - Ensure `.htaccess` is correct
-- Check Laravel logs in `storage/logs/laravel.log`
+- Verify backend path in .htaccess points to `backend/public/`
+- Check Laravel logs in `backend/storage/logs/laravel.log`
 
 ### Images Not Loading
 - Run `php artisan storage:link`
@@ -199,12 +254,14 @@ php artisan storage:link
 
 1. Build frontend: `cd frontend && npm run build`
 2. Upload `frontend/out/*` to `public_html/`
-3. Upload `backend/*` to `public_html/` (except .git)
-4. Create database and import data
-5. Configure `.env` with database credentials
-6. Run artisan commands
-7. Set permissions
+3. Create `public_html/backend/` folder
+4. Upload `backend/*` to `public_html/backend/`
+5. Create `public_html/.htaccess` with routing rules
+6. Create database and import data
+7. Configure `public_html/backend/.env` with database credentials
+8. Run artisan commands in `public_html/backend/`
+9. Set permissions
 
 ---
 
-For support, check cPanel Error Logs or Laravel logs at `storage/logs/laravel.log`
+For support, check cPanel Error Logs or Laravel logs at `backend/storage/logs/laravel.log`
