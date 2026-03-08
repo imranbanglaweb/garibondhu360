@@ -31,7 +31,7 @@ export default function Demo() {
                 ডেমোর জন্য আমাদের সাথে যোগাযোগ করুন:
               </p>
               <p style={{ fontSize: '24px', color: 'var(--primary-orange)', marginTop: '10px' }}>
-                📞 +880 1XX-XXXXXXX
+                📞 +880 1918329829
               </p>
               <p style={{ fontSize: '18px', color: 'var(--primary-orange)' }}>
                 ✉️ demo@garibondhu360.com

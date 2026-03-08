@@ -100,6 +100,79 @@ export const contactAPI = {
     subject: string;
     message: string;
   }) => api.post('/contact', data),
+
+  list: (params?: { page?: number; per_page?: number }) =>
+    api.get('/contacts', { params }),
+
+  get: (id: number) => api.get(`/contacts/${id}`),
+
+  updateStatus: (id: number, status: string) =>
+    api.patch(`/contacts/${id}/status`, { status }),
+
+  delete: (id: number) => api.delete(`/contacts/${id}`),
+};
+
+// Demo Request API
+export const demoRequestAPI = {
+  submit: (data: {
+    name: string;
+    email: string;
+    phone: string;
+    company: string;
+    vehicles: string;
+    drivers: string;
+  }) => api.post('/demo-request', data),
+
+  list: (params?: { page?: number; per_page?: number }) =>
+    api.get('/demo-requests', { params }),
+
+  get: (id: number) => api.get(`/demo-requests/${id}`),
+
+  updateStatus: (id: number, status: string) =>
+    api.patch(`/demo-requests/${id}/status`, { status }),
+
+  delete: (id: number) => api.delete(`/demo-requests/${id}`),
+};
+
+// Subscription & Payment API
+export const subscriptionAPI = {
+  // Public
+  packages: () => api.get('/packages'),
+  package: (id: number) => api.get(`/packages/${id}`),
+
+  // User - Subscribe
+  subscribe: (data: { 
+    package_id: number;
+    customer_name?: string;
+    customer_email?: string;
+    customer_phone?: string;
+  }) =>
+    api.post('/subscribe', data),
+
+  // User - Get subscriptions
+  mySubscriptions: () => api.get('/my-subscriptions'),
+  myActiveSubscription: () => api.get('/my-active-subscription'),
+
+  // User - Submit payment
+  submitPayment: (data: {
+    subscription_id: number;
+    payment_method: string;
+    transaction_id: string;
+    sender_number: string;
+    amount: number;
+    customer_name?: string;
+    customer_email?: string;
+    customer_phone?: string;
+  }) => api.post('/submit-payment', data),
+
+  // User - Get payments
+  myPayments: () => api.get('/my-payments'),
+  payment: (id: number) => api.get(`/my-payments/${id}`),
+};
+
+// Public API (no auth required)
+export const publicAPI = {
+  stats: () => api.get('/public-stats'),
 };
 
 export default api;

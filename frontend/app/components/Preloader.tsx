@@ -24,7 +24,7 @@ export default function Preloader() {
       <div style={{ textAlign: 'center' }}>
         {/* Logo */}
         <img 
-          src="/images/logo-white.svg" 
+          src="/images/logo.png" 
           alt="গাড়িবন্ধু ৩৬০" 
           style={{ 
             width: '200px',

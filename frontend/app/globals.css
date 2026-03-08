@@ -549,15 +549,101 @@ h4 { font-size: 1.25rem; }
 }
 
 .pricing-card ul li {
-  padding: 10px 0;
+  padding: 12px 15px;
   color: var(--dark-gray);
   border-bottom: 1px solid var(--medium-gray);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1rem;
+  border-radius: 8px;
+  transition: var(--transition);
 }
 
-.pricing-card ul li::before {
-  content: "✓";
-  color: var(--secondary-green);
-  margin-right: 10px;
+.pricing-card ul li:hover {
+  background-color: #f8f9fa;
+  transform: translateX(5px);
+}
+
+/* Premium Check Icon */
+.check-icon {
+  color: #27ae60;
+  font-weight: 700;
+  font-size: 1.1rem;
+  background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 10px rgba(39, 174, 96, 0.3);
+}
+
+/* Premium Cross Icon */
+.cross-icon {
+  color: #e74c3c;
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+/* Premium Features List */
+.premium-features li {
+  background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(249,250,251,1) 100%);
+  border: 1px solid #e5e7eb !important;
+  margin-bottom: 8px;
+}
+
+/* Premium Button with Icon */
+.btn-pricing {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 15px 25px;
+  background: linear-gradient(135deg, var(--primary-orange) 0%, #FF8C42 100%);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+}
+
+.btn-pricing:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
+}
+
+.btn-pricing .btn-icon {
+  font-size: 1.2rem;
+}
+
+.btn-pricing.popular-btn {
+  background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+  box-shadow: 0 4px 15px rgba(39, 174, 96, 0.3);
+}
+
+.btn-pricing.popular-btn:hover {
+  box-shadow: 0 6px 20px rgba(39, 174, 96, 0.4);
+}
+
+/* Popular Badge Enhancement */
+.popular-badge {
+  position: absolute;
+  top: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+  color: white;
+  padding: 8px 25px;
+  border-radius: 25px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 4px 15px rgba(231, 76, 60, 0.4);
+  z-index: 10;
 }
 
 /* ===== Contact Section ===== */

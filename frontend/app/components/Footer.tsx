@@ -23,7 +23,7 @@ export default function Footer() {
           <h3>যোগাযোগ</h3>
           <ul>
             <li>📍 ঢাকা, বাংলাদেশ</li>
-            <li>📞 +880 1XX-XXXXXXX</li>
+            <li>📞 01918329829</li>
             <li>✉️ info@garibondhu360.com</li>
           </ul>
         </div>
