@@ -5,7 +5,7 @@ export default function Footer() {
     <footer className="footer">
       <div className="footer-container">
         <div className="footer-col">
-          <h3>গাড়িবন্ধু ৩৬০</h3>
+          <img src="/images/logo-white.svg" alt="গাড়িবন্ধু ৩৬০ লোগো" style={{ width: '180px', marginBottom: '15px' }} />
           <p>বাংলাদেশের প্রথম সম্পূর্ণ বাংলা ফ্লিট ম্যানেজমেন্ট সিস্টেম। গাড়ি, চালক, রিকুইজিশন, অনুমোদন সবকিছু এক প্ল্যাটফর্মে।</p>
         </div>
         
