@@ -13,6 +13,7 @@ interface Package {
   price: number;
   vehicle_limit: number;
   driver_limit: number;
+  features?: string[];
 }
 
 interface Stats {
@@ -24,9 +25,10 @@ interface Stats {
 export default function Home() {
   const [loading, setLoading] = useState(false);
   const [packages, setPackages] = useState<Package[]>([
-    { id: 1, name: 'Starter', price: 1000, vehicle_limit: 2, driver_limit: 5 },
-    { id: 2, name: 'Basic', price: 3000, vehicle_limit: 5, driver_limit: 10 },
-    { id: 3, name: 'Pro', price: 5000, vehicle_limit: 20, driver_limit: 50 },
+    { id: 0, name: 'Free Trial', price: 0, vehicle_limit: 5, driver_limit: 4, features: ['Fuel & Maintenance Management', 'Basic Reports', 'Vehicle Tracking', 'Driver Management', 'Requisition System', 'Up to 5 Vehicles', '4 Users'] },
+    { id: 1, name: 'Starter', price: 1999, vehicle_limit: 5, driver_limit: 4, features: ['Requisition Manage', 'Trip Manage', 'GPS Tracker', 'Email & Notification Support', 'Multi Language Support', 'Fuel & Maintenance', 'Basic Reports', 'Vehicle Tracking', 'Driver Management', 'Up to 5 Vehicles', '4 Users'] },
+    { id: 2, name: 'Business', price: 5000, vehicle_limit: 25, driver_limit: 10, features: ['Advanced Reports', 'Priority Support', 'Fuel & Maintenance', 'API Access', 'GPS Tracking', 'Trip Sheets', 'Maintenance Alerts', 'Up to 25 Vehicles', '10 Users'] },
+    { id: 3, name: 'Enterprise', price: 0, vehicle_limit: 999999, driver_limit: 999999, features: ['Unlimited Vehicles', 'Unlimited Users', 'Unlimited Drivers', 'API & Integrations', 'Dedicated Account Manager', 'Custom Development', '24/7 Priority Support'] },
   ]);
   const [stats, setStats] = useState<Stats>({ totalUsers: 150, totalVehicles: 500, totalDrivers: 1000 });
 
@@ -119,79 +121,232 @@ export default function Home() {
       <section className="hero">
         <div className="hero-container">
           <div className="hero-content">
-            <h1>আপনার ফ্লিট ম্যানেজমেন্ট <span>এখন ডিজিটাল করুন</span></h1>
+            <div style={{ 
+              display: 'inline-block', 
+              background: 'rgba(255,107,53,0.15)', 
+              padding: '8px 20px', 
+              borderRadius: '50px',
+              marginBottom: '20px',
+              fontSize: '14px',
+              fontWeight: '600',
+              color: '#FF6B35'
+            }}>
+              🚀 AI-Powered Transport Management
+            </div>
+            <h1>আপনার ট্রান্সপোর্ট ম্যানেজমেন্ট <span>এখন স্মার্ট</span></h1>
             <p className="hero-text">
-              গাড়ি, চালক, রিকুইজিশন, অনুমোদন — সবকিছু এক প্ল্যাটফর্মে। 
-              গাড়িবন্ধু ৩৬০ নিয়ে আসে সম্পূর্ণ অটোমেশন।
+              গাড়ি, চালক, জিপিএস ট্র্যাকিং, রিকুইজিশন, মেইনটেন্যান্স ও এআই — সবকিছু এক প্ল্যাটফর্মে। 
+              গাড়িবন্ধু ৩৬০ দিয়ে আপনার পরিবহন ব্যবস্থাপনা হোক সম্পূর্ণ অটোমেটেড।
             </p>
             <div className="hero-buttons">
               <Link href="/register" className="btn btn-primary">ফ্রি ট্রায়াল শুরু করুন</Link>
               <Link href="/demo" className="btn btn-secondary">ডেমো দেখুন</Link>
             </div>
-            <p className="small-text">৫ দিনের ফ্রি ট্রায়াল, কোন ক্রেডিট কার্ড লাগবে না</p>
+            <div style={{ display: 'flex', gap: '20px', marginTop: '20px', flexWrap: 'wrap' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '14px' }}>
+                <span style={{ color: '#4CAF50' }}>✓</span> রিয়েল-টাইম জিপিএস
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '14px' }}>
+                <span style={{ color: '#4CAF50' }}>✓</span> এআই প্রিডিক্টিভ মেইনটেন্যান্স
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '14px' }}>
+                <span style={{ color: '#4CAF50' }}>✓</span> স্মার্ট অ্যাপ্রুভাল ওয়ার্কফ্লো
+              </div>
+            </div>
           </div>
           <div className="hero-image">
-            <img src="/images/dashboard-preview.svg" alt="গাড়িবন্ধু ৩৬০ ড্যাশবোর্ড" />
+            <img src="/images/smart-dashboard.png" alt="গাড়িবন্ধু ৩৬০ ড্যাশবোর্ড" />
           </div>
         </div>
       </section>
 
       {/* Stats Section */}
-      <section className="stats">
-        <div className="stat-item">
-          <h3>{stats.totalUsers}+</h3>
-          <p>সন্তুষ্ট গ্রাহক</p>
-        </div>
-        <div className="stat-item">
-          <h3>{stats.totalVehicles}+</h3>
-          <p>গাড়ি ম্যানেজ</p>
-        </div>
-        <div className="stat-item">
-          <h3>{stats.totalDrivers}+</h3>
-          <p>চালক রেজিস্টার্ড</p>
-        </div>
-        <div className="stat-item">
-          <h3>২৪/৭</h3>
-          <p>সাপোর্ট</p>
+      <section style={{ 
+        padding: '60px 5%', 
+        background: '#fff',
+        boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
+        marginTop: '-30px',
+        position: 'relative',
+        zIndex: 10,
+        maxWidth: '1200px',
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        borderRadius: '20px'
+      }}>
+        <div className="stats" style={{ 
+          display: 'grid', 
+          gridTemplateColumns: 'repeat(4, 1fr)', 
+          gap: '20px',
+          background: 'transparent',
+          padding: 0
+        }}>
+          <div className="stat-item" style={{ 
+            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+            padding: '30px 20px',
+            borderRadius: '15px',
+            color: '#fff'
+          }}>
+            <h3 style={{ fontSize: '2.5rem', marginBottom: '5px' }}>{stats.totalUsers}+</h3>
+            <p style={{ fontSize: '14px', opacity: 0.9 }}>সন্তুষ্ট গ্রাহক</p>
+          </div>
+          <div className="stat-item" style={{ 
+            background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+            padding: '30px 20px',
+            borderRadius: '15px',
+            color: '#fff'
+          }}>
+            <h3 style={{ fontSize: '2.5rem', marginBottom: '5px' }}>{stats.totalVehicles}+</h3>
+            <p style={{ fontSize: '14px', opacity: 0.9 }}>গাড়ি ম্যানেজ</p>
+          </div>
+          <div className="stat-item" style={{ 
+            background: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
+            padding: '30px 20px',
+            borderRadius: '15px',
+            color: '#fff'
+          }}>
+            <h3 style={{ fontSize: '2.5rem', marginBottom: '5px' }}>{stats.totalDrivers}+</h3>
+            <p style={{ fontSize: '14px', opacity: 0.9 }}>চালক রেজিস্টার্ড</p>
+          </div>
+          <div className="stat-item" style={{ 
+            background: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',
+            padding: '30px 20px',
+            borderRadius: '15px',
+            color: '#fff'
+          }}>
+            <h3 style={{ fontSize: '2.5rem', marginBottom: '5px' }}>২৪/৭</h3>
+            <p style={{ fontSize: '14px', opacity: 0.9 }}>সাপোর্ট</p>
+          </div>
         </div>
       </section>
 
       {/* Process/How It Works Section */}
-      <section className="services" style={{ background: '#f8f9fa' }}>
-        <h2 className="section-title">কিভাবে কাজ করে?</h2>
-        <p className="section-subtitle">গাড়িবন্ধু ৩৬০ ব্যবহারের সহজ পদ্ধতি</p>
+      <section style={{ 
+        background: 'linear-gradient(135deg, #1E3D58 0%, #2a4a6a 100%)', 
+        padding: '100px 5%',
+        color: '#fff'
+      }}>
+        <h2 style={{ 
+          textAlign: 'center', 
+          marginBottom: '15px', 
+          fontSize: '2.5rem',
+          color: '#fff'
+        }}>কিভাবে কাজ করে?</h2>
+        <p style={{ 
+          textAlign: 'center', 
+          marginBottom: '50px', 
+          color: 'rgba(255,255,255,0.8)',
+          fontSize: '1.1rem'
+        }}>গাড়িবন্ধু ৩৬০ ব্যবহারের সহজ পদ্ধতি — মাত্র ৪ ধাপে শুরু করুন</p>
         
-        <div className="services-grid">
-          <div className="service-card">
-            <div className="service-icon">📝</div>
-            <h3>১. রেজিস্ট্রেশন</h3>
-            <p>আমাদের ওয়েবসাইটে গিয়ে নিজের অ্যাকাউন্ট তৈরি করুন। শুধুমাত্র আপনার নাম, ইমেইল ও ফোন নম্বর লাগবে।</p>
+        <div style={{ 
+          display: 'grid', 
+          gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', 
+          gap: '30px',
+          maxWidth: '1200px',
+          margin: '0 auto'
+        }}>
+          <div style={{ 
+            background: 'rgba(255,255,255,0.1)', 
+            padding: '40px 30px', 
+            borderRadius: '20px',
+            backdropFilter: 'blur(10px)',
+            border: '1px solid rgba(255,255,255,0.2)',
+            textAlign: 'center'
+          }}>
+            <div style={{ 
+              fontSize: '3rem', 
+              marginBottom: '20px',
+              background: '#FF6B35',
+              width: '70px',
+              height: '70px',
+              borderRadius: '50%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              margin: '0 auto 20px'
+            }}>📝</div>
+            <h3 style={{ marginBottom: '15px', fontSize: '1.3rem' }}>১. রেজিস্ট্রেশন</h3>
+            <p style={{ opacity: 0.8, fontSize: '14px', lineHeight: '1.6' }}>আমাদের ওয়েবসাইটে গিয়ে নিজের অ্যাকাউন্ট তৈরি করুন। শুধুমাত্র আপনার নাম, ইমেইল ও ফোন নম্বর লাগবে।</p>
           </div>
           
-          <div className="service-card">
-            <div className="service-icon">📦</div>
-            <h3>২. প্যাকেজ নির্বাচন</h3>
-            <p>আপনার প্রয়োজন অনুযায়ী প্যাকেজ বেছে নিন। স্টার্টার, বেসিক বা প্রো — যেকোনোটি নিতে পারেন।</p>
+          <div style={{ 
+            background: 'rgba(255,255,255,0.1)', 
+            padding: '40px 30px', 
+            borderRadius: '20px',
+            backdropFilter: 'blur(10px)',
+            border: '1px solid rgba(255,255,255,0.2)',
+            textAlign: 'center'
+          }}>
+            <div style={{ 
+              fontSize: '3rem', 
+              marginBottom: '20px',
+              background: '#FF6B35',
+              width: '70px',
+              height: '70px',
+              borderRadius: '50%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              margin: '0 auto 20px'
+            }}>📦</div>
+            <h3 style={{ marginBottom: '15px', fontSize: '1.3rem' }}>২. প্যাকেজ নির্বাচন</h3>
+            <p style={{ opacity: 0.8, fontSize: '14px', lineHeight: '1.6' }}>আপনার প্রয়োজন অনুযায়ী প্যাকেজ বেছে নিন। স্টার্টার, বেসিক বা প্রো — যেকোনোটি নিতে পারেন।</p>
           </div>
           
-          <div className="service-card">
-            <div className="service-icon">💳</div>
-            <h3>৩. পেমেন্ট</h3>
-            <p>bKash, Rocket বা Nagad যেকোনো মাধ্যমে পেমেন্ট করুন। ট্রানজেকশন আইডি দিন।</p>
+          <div style={{ 
+            background: 'rgba(255,255,255,0.1)', 
+            padding: '40px 30px', 
+            borderRadius: '20px',
+            backdropFilter: 'blur(10px)',
+            border: '1px solid rgba(255,255,255,0.2)',
+            textAlign: 'center'
+          }}>
+            <div style={{ 
+              fontSize: '3rem', 
+              marginBottom: '20px',
+              background: '#FF6B35',
+              width: '70px',
+              height: '70px',
+              borderRadius: '50%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              margin: '0 auto 20px'
+            }}>💳</div>
+            <h3 style={{ marginBottom: '15px', fontSize: '1.3rem' }}>৩. পেমেন্ট</h3>
+            <p style={{ opacity: 0.8, fontSize: '14px', lineHeight: '1.6' }}>bKash, Rocket বা Nagad যেকোনো মাধ্যমে পেমেন্ট করুন। ট্রানজেকশন আইডি দিন।</p>
           </div>
           
-          <div className="service-card">
-            <div className="service-icon">🚀</div>
-            <h3>৪. ব্যবহার শুরু</h3>
-            <p>পেমেন্ট যাচাই হলে আপনার সাবস্ক্রিপশন সক্রিয় হবে। তারপর সিস্টেম ব্যবহার করুন।</p>
+          <div style={{ 
+            background: 'rgba(255,255,255,0.1)', 
+            padding: '40px 30px', 
+            borderRadius: '20px',
+            backdropFilter: 'blur(10px)',
+            border: '1px solid rgba(255,255,255,0.2)',
+            textAlign: 'center'
+          }}>
+            <div style={{ 
+              fontSize: '3rem', 
+              marginBottom: '20px',
+              background: '#FF6B35',
+              width: '70px',
+              height: '70px',
+              borderRadius: '50%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              margin: '0 auto 20px'
+            }}>🚀</div>
+            <h3 style={{ marginBottom: '15px', fontSize: '1.3rem' }}>৪. ব্যবহার শুরু</h3>
+            <p style={{ opacity: 0.8, fontSize: '14px', lineHeight: '1.6' }}>পেমেন্ট যাচাই হলে আপনার সাবস্ক্রিপশন সক্রিয় হবে। তারপর সিস্টেম ব্যবহার করুন।</p>
           </div>
         </div>
       </section>
 
       {/* Services Section */}
-      <section className="services">
+      <section className="services" style={{ background: '#f8f9fa', padding: '100px 5%' }}>
         <h2 className="section-title">আমরা যা করি</h2>
-        <p className="section-subtitle">আপনার ফ্লিট ম্যানেজমেন্টের সব সমস্যার সমাধান এক জায়গায়</p>
+        <p className="section-subtitle">আপনার ট্রান্সপোর্ট ম্যানেজমেন্টের সব সমস্যার সমাধান এক জায়গায়</p>
         
         <div className="services-grid">
           <div className="service-card">
@@ -207,119 +362,216 @@ export default function Home() {
           </div>
           
           <div className="service-card">
+            <div className="service-icon">🛰️</div>
+            <h3>জিপিএস ট্র্যাকিং</h3>
+            <p>রিয়েল-টাইম লোকেশন, ট্রিপ হিস্টরি, গতানুগতিক বিশ্লেষণ</p>
+          </div>
+          
+          <div className="service-card">
             <div className="service-icon">📝</div>
             <h3>রিকুইজিশন সিস্টেম</h3>
             <p>গাড়ি চাওয়ার আবেদন, অনুমোদন প্রক্রিয়া, ট্রিপ শিট</p>
           </div>
           
           <div className="service-card">
-            <div className="service-icon">✅</div>
-            <h3>মাল্টি-লেভেল অ্যাপ্রুভাল</h3>
-            <p>বিভাগীয় প্রধান ও পরিবহন অ্যাডমিনের দ্বি-স্তর অনুমোদন</p>
+            <div className="service-icon">🤖</div>
+            <h3>এআই মেইনটেন্যান্স</h3>
+            <p>প্রিডিক্টিভ অ্যালার্ট, ভেহিক্যাল কন্ডিশন বিশ্লেষণ, স্মার্ট রিপোর্ট</p>
+          </div>
+          
+          <div className="service-card">
+            <div className="service-icon">⛽</div>
+            <h3>জ্বালানি ব্যবস্থাপনা</h3>
+            <p>ফুয়েল লগ, খরচ বিশ্লেষণ, ভেহিক্যাল ইফিসিয়েন্সি রিপোর্ট</p>
           </div>
         </div>
         
-        <div style={{ textAlign: 'center', marginTop: '40px' }}>
+        <div style={{ textAlign: 'center', marginTop: '50px' }}>
           <Link href="/services" className="btn btn-primary">সব সেবা দেখুন</Link>
         </div>
       </section>
 
       {/* Features Preview */}
-      <section className="features">
+      <section className="features" style={{ padding: '100px 5%', background: '#fff' }}>
         <h2 className="section-title">শক্তিশালী ফিচারসমূহ</h2>
-        <p className="section-subtitle">আপনার ব্যবসাকে এগিয়ে নিতে যা যা দরকার</p>
+        <p className="section-subtitle">আপনার ট্রান্সপোর্ট ব্যবস্থাপনাকে এগিয়ে নিতে সবকিছু এক ড্যাশবোর্ডে</p>
         
         <div className="feature-row">
           <div className="feature-text">
-            <h3>📊 ড্যাশবোর্ড ওভারভিউ</h3>
-            <p>এক নজরে দেখুন কতগুলো রিকুইজিশন পেন্ডিং, কতগুলো অ্যাপ্রুভড, কতগুলো গাড়ি আছে, কতজন চালক আছে। আপনার পুরো ফ্লিটের অবস্থা বুঝতে পারবেন ৫ সেকেন্ডে।</p>
-            <ul>
-              <li>মোট রিকুইজিশন, পেন্ডিং, অ্যাপ্রুভড এক নজরে</li>
-              <li>গাড়ি ও চালকের সংখ্যা রিয়েল-টাইম আপডেট</li>
-              <li>দ্রুত অ্যাকশনের জন্য কাটনুইক ব</li>
+            <h3>📊 স্মার্ট ড্যাশবোর্ড</h3>
+            <p>এক নজরে দেখুন আপনার সমস্ত গাড়ি, চালক ও রিকুইজিশনের অবস্থা। রিয়েল-টাইম আপডেট ও তাৎক্ষণিক অ্যাকশনের সুবিধা।</p>
+            <ul style={{ color: '#555', lineHeight: '2' }}>
+              <li>✓ মোট রিকুইজিশন, পেন্ডিং, অ্যাপ্রুভড এক নজরে</li>
+              <li>✓ গাড়ি ও চালকের সংখ্যা রিয়েল-টাইম আপডেট</li>
+              <li>✓ এআই-জেনারেটেড মেইনটেন্যান্স অ্যালার্ট</li>
             </ul>
           </div>
           <div className="feature-image">
-            <img src="/images/dashboard-feature.svg" alt="ড্যাশবোর্ড ফিচার" />
+            <img src="/images/dashboard.png" alt="ড্যাশবোর্ড ফিচার" />
           </div>
         </div>
         
         <div className="feature-row reverse">
           <div className="feature-image">
-            <img src="/images/requisition-feature.svg" alt="রিকুইজিশন ফিচার" />
+            <img src="/images/create-requisition.png" alt="রিকুইজিশন ফিচার" />
           </div>
           <div className="feature-text">
-            <h3>📝 স্মার্ট রিকুইজিশন সিস্টেম</h3>
-            <p>কর্মচারীরা সহজেই গাড়ি চাওয়ার আবেদন করতে পারে। কোথায় যাবে, কখন যাবে, কেন যাবে — সব তথ্য দিয়ে আবেদন জমা দিন।</p>
-            <ul>
-              <li>ট্রাভেল ডেট, ডেস্টিনেশন সহ আবেদন</li>
-              <li>রিয়েল-টাইম স্ট্যাটাস ট্র্যাকিং</li>
-              <li>অটোমেটিক নোটিফিকেশন</li>
+            <h3>📝 অটোমেটেড রিকুইজিশন ওয়ার্কফ্লো</h3>
+            <p>গাড়ি চাওয়ার আবেদন থেকে শুরু করে অনুমোদন, ভাড়া, রিটার্ন — সব প্রক্রিয়া স্বয়ংক্রিয়। মাল্টি-লেভেল অ্যাপ্রুভাল সিস্টেম।</p>
+            <ul style={{ color: '#555', lineHeight: '2' }}>
+              <li>✓ অনলাইন আবেদন ও রিয়েল-টাইম স্ট্যাটাস ট্র্যাকিং</li>
+              <li>✓ বিভাগীয় প্রধান ও ট্রান্সপোর্ট অ্যাডমিন অ্যাপ্রুভাল</li>
+              <li>✓ অটোমেটিক নোটিফিকেশন ও ইমেইল</li>
             </ul>
           </div>
         </div>
+
+        <div className="feature-row">
+          <div className="feature-text">
+            <h3>🤖 এআই-পাওয়ার্ড ফিচার</h3>
+            <p>OpenAI-এর সাহায্যে প্রিডিক্টিভ মেইনটেন্যান্স, ভেহিক্যাল কন্ডিশন বিশ্লেষণ এবং স্মার্ট রিপোর্ট জেনারেশন।</p>
+            <ul style={{ color: '#555', lineHeight: '2' }}>
+              <li>✓ তেল, টায়ার, ব্রেক, ব্যাটারি — সব ধরনের অ্যালার্ট</li>
+              <li>✓ ভেহিক্যাল হেলথ স্কোর ও রিকমেন্ডেশন</li>
+              <li>✓ এআই জেনারেটেড ফ্লিট বিশ্লেষণ রিপোর্ট</li>
+            </ul>
+          </div>
+          <div className="feature-image">
+            <img src="/images/ai-sadhboard.png" alt="AI ফিচার" />
+          </div>
+        </div>
         
-        <div style={{ textAlign: 'center', marginTop: '40px' }}>
+        <div style={{ textAlign: 'center', marginTop: '60px' }}>
           <Link href="/features" className="btn btn-primary">সব ফিচার দেখুন</Link>
         </div>
       </section>
 
       {/* Pricing Preview Section - Dynamic */}
       {packages.length > 0 && (
-        <section className="pricing">
+        <section className="pricing" style={{ padding: '100px 5%' }}>
           <h2 className="section-title">সাশ্রয়ী মূল্যে প্রিমিয়াম সেবা</h2>
           <p className="section-subtitle">আপনার প্রয়োজন অনুযায়ী প্যাকেজ সিলেক্ট করুন</p>
           
-          <div className="pricing-grid">
+          <div style={{ 
+            display: 'grid', 
+            gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', 
+            gap: '30px', 
+            maxWidth: '1200px', 
+            margin: '0 auto' 
+          }}>
             {packages.map((pkg, index) => (
               <div 
                 key={pkg.id} 
-                className={`pricing-card ${index === 1 ? 'popular' : ''}`}
+                style={{ 
+                  background: '#fff',
+                  borderRadius: '20px',
+                  padding: '30px',
+                  textAlign: 'center',
+                  border: index === 0 ? '3px solid #27ae60' : index === 2 ? '3px solid #FF6B35' : '1px solid #eee',
+                  boxShadow: '0 10px 40px rgba(0,0,0,0.1)',
+                  position: 'relative',
+                  transition: 'transform 0.3s ease'
+                }}
               >
-                {index === 1 && <div className="popular-badge">সর্বাধিক বিক্রিত</div>}
-                <div className={`pricing-header ${index === 0 ? 'starter' : index === 1 ? 'business' : 'enterprise'}`}>
-                  <h3>{pkg.name}</h3>
-                  <p className="price">
-                    {pkg.price > 0 ? (
-                      <>৳{pkg.price.toLocaleString()} <span>টাকা/মাস</span></>
-                    ) : (
-                      'আলোচনা সাপেক্ষে'
-                    )}
-                  </p>
+                {index === 0 && (
+                  <div style={{
+                    position: 'absolute',
+                    top: '-15px',
+                    left: '50%',
+                    transform: 'translateX(-50%)',
+                    background: '#27ae60',
+                    color: '#fff',
+                    padding: '8px 20px',
+                    borderRadius: '20px',
+                    fontSize: '12px',
+                    fontWeight: 'bold',
+                    whiteSpace: 'nowrap',
+                    boxShadow: '0 4px 10px rgba(39, 174, 96, 0.3)'
+                  }}>
+                    ✨ 7 DAYS FREE TRIAL
+                  </div>
+                )}
+                {index === 2 && (
+                  <div style={{
+                    position: 'absolute',
+                    top: '-15px',
+                    left: '50%',
+                    transform: 'translateX(-50%)',
+                    background: '#FF6B35',
+                    color: '#fff',
+                    padding: '8px 20px',
+                    borderRadius: '20px',
+                    fontSize: '12px',
+                    fontWeight: 'bold',
+                    whiteSpace: 'nowrap',
+                    boxShadow: '0 4px 10px rgba(255, 107, 53, 0.3)'
+                  }}>
+                    ⭐ MOST POPULAR
+                  </div>
+                )}
+                {index === 3 && (
+                  <div style={{
+                    position: 'absolute',
+                    top: '-15px',
+                    left: '50%',
+                    transform: 'translateX(-50%)',
+                    background: '#1E3D58',
+                    color: '#fff',
+                    padding: '8px 20px',
+                    borderRadius: '20px',
+                    fontSize: '12px',
+                    fontWeight: 'bold',
+                    whiteSpace: 'nowrap',
+                    boxShadow: '0 4px 10px rgba(30, 61, 88, 0.3)'
+                  }}>
+                    💼 CUSTOM PRICING
+                  </div>
+                )}
+                <div style={{ fontSize: '3rem', marginBottom: '15px' }}>
+                  {index === 0 ? '🎁' : index === 1 ? '🚀' : index === 2 ? '📦' : '👑'}
                 </div>
-                <div className="pricing-body">
-                  <ul className="premium-features">
-                    <li><span className="check-icon">✓</span> {pkg.vehicle_limit >= 999999 ? 'আনলিমিটেড গাড়ি' : `${pkg.vehicle_limit}টি গাড়ি পর্যন্ত`}</li>
-                    <li><span className="check-icon">✓</span> {pkg.driver_limit >= 999999 ? 'আনলিমিটেড চালক' : `${pkg.driver_limit}জন চালক পর্যন্ত`}</li>
-                    {index === 0 && (
-                      <>
-                        <li><span className="check-icon">✓</span> বেসিক রিপোর্ট</li>
-                        <li className="no"><span className="cross-icon">✗</span> অ্যাডভান্স রিপোর্ট</li>
-                      </>
-                    )}
-                    {index === 1 && (
-                      <>
-                        <li><span className="check-icon">✓</span> অ্যাডভান্স রিপোর্ট</li>
-                        <li><span className="check-icon">✓</span> ফোন + ইমেইল সাপোর্ট</li>
-                      </>
-                    )}
-                    {index === 2 && (
-                      <>
-                        <li><span className="check-icon">✓</span> কাস্টমাইজড রিপোর্ট</li>
-                        <li><span className="check-icon">✓</span> ২৪/৭ প্রাইওরিটি সাপোর্ট</li>
-                      </>
-                    )}
-                  </ul>
-                  {pkg.price > 0 ? (
-                    <Link href={`/payment?package=${pkg.id}`} className={`btn-pricing ${index === 1 ? 'popular-btn' : ''}`}>
-                      <span className="btn-icon">🎯</span> এই প্যাকেজ নিন
-                    </Link>
-                  ) : (
-                    <Link href="/contact" className="btn-pricing">
-                      <span className="btn-icon">📞</span> যোগাযোগ করুন
-                    </Link>
-                  )}
+                <h3 style={{ fontSize: '1.5rem', marginBottom: '10px', color: '#1E3D58' }}>{pkg.name}</h3>
+                <div style={{ 
+                  fontSize: index === 0 ? '2.5rem' : '2rem', 
+                  color: index === 0 ? '#27ae60' : index === 3 ? '#1E3D58' : '#FF6B35', 
+                  fontWeight: 'bold',
+                  marginBottom: index === 0 ? '5px' : '0'
+                }}>
+                  {index === 0 ? 'Free' : index === 3 ? 'Custom' : `৳${pkg.price.toLocaleString()}`}
                 </div>
+                {index === 0 && (
+                  <p style={{ color: '#666', fontSize: '14px', marginBottom: '15px' }}>7 Days Free Trial</p>
+                )}
+                {index === 3 && (
+                  <p style={{ color: '#666', fontSize: '14px', marginBottom: '15px' }}>Contact for Pricing</p>
+                )}
+                {index > 0 && index < 3 && (
+                  <p style={{ color: '#666', fontSize: '14px', marginBottom: '15px' }}>টাকা/মাস</p>
+                )}
+                <ul style={{ textAlign: 'left', listStyle: 'none', padding: '0', margin: '20px 0' }}>
+                  {pkg.features?.map((feature, i) => (
+                    <li key={i} style={{ padding: '8px 0', display: 'flex', alignItems: 'center', gap: '10px', fontSize: '14px', color: '#555' }}>
+                      <span style={{ color: '#27ae60', fontWeight: 'bold' }}>✓</span> {feature}
+                    </li>
+                  ))}
+                </ul>
+                <Link 
+                  href={pkg.id === 0 ? '/register' : pkg.id === 3 ? '/contact' : `/payment?package=${pkg.id}`}
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '10px',
+                    padding: '12px 25px',
+                    borderRadius: '50px',
+                    textDecoration: 'none',
+                    background: index === 0 ? '#27ae60' : index === 2 ? '#FF6B35' : '#1E3D58',
+                    color: '#fff',
+                    fontWeight: '600',
+                    marginTop: '10px'
+                  }}
+                >
+                  {index === 0 ? '🚀 Start Free Trial' : index === 3 ? '📞 Contact Us' : `🎯 এই প্যাকেজ নিন`}
+                </Link>
               </div>
             ))}
           </div>

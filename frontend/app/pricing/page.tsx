@@ -20,10 +20,10 @@ interface Package {
 export default function Pricing() {
   const router = useRouter();
   const [packages, setPackages] = useState<Package[]>([
-    { id: 1, name: 'Starter', price: 1000, vehicle_limit: 2, driver_limit: 5, features: ['2 Vehicles', '5 Drivers', 'Basic Reports', 'Email Support'], is_active: true },
-    { id: 2, name: 'Basic', price: 3000, vehicle_limit: 5, driver_limit: 10, features: ['5 Vehicles', '10 Drivers', 'Basic Reports', 'Email Support'], is_active: true },
-    { id: 3, name: 'Pro', price: 5000, vehicle_limit: 20, driver_limit: 50, features: ['20 Vehicles', '50 Drivers', 'Advanced Reports', 'Priority Support', 'Multi-Approval'], is_active: true },
-    { id: 4, name: 'Enterprise', price: 0, vehicle_limit: 999999, driver_limit: 999999, features: ['Unlimited Vehicles', 'Unlimited Drivers', 'Custom Reports', '24/7 Support', 'Dedicated Manager'], is_active: true },
+    { id: 0, name: 'Free Trial', price: 0, vehicle_limit: 5, driver_limit: 4, features: ['Fuel & Maintenance Management', 'Basic Reports', 'Vehicle Tracking', 'Driver Management', 'Requisition System', 'Up to 5 Vehicles', '4 Users'], is_active: true },
+    { id: 1, name: 'Starter', price: 1999, vehicle_limit: 5, driver_limit: 4, features: ['Requisition Manage', 'Trip Manage', 'GPS Tracker', 'Email & Notification Support', 'Multi Language Support', 'Fuel & Maintenance', 'Basic Reports', 'Vehicle Tracking', 'Driver Management', 'Up to 5 Vehicles', '4 Users'], is_active: true },
+    { id: 2, name: 'Business', price: 5000, vehicle_limit: 25, driver_limit: 10, features: ['Advanced Reports', 'Priority Support', 'Fuel & Maintenance', 'API Access', 'GPS Tracking', 'Trip Sheets', 'Maintenance Alerts', 'Up to 25 Vehicles', '10 Users'], is_active: true },
+    { id: 3, name: 'Enterprise', price: 0, vehicle_limit: 999999, driver_limit: 999999, features: ['Unlimited Vehicles', 'Unlimited Users', 'Unlimited Drivers', 'API & Integrations', 'Dedicated Account Manager', 'Custom Development', '24/7 Priority Support'], is_active: true },
   ]);
   const [loading, setLoading] = useState(true);
 
@@ -104,16 +104,78 @@ export default function Pricing() {
               className="service-card" 
               style={{ 
                 textAlign: 'center',
-                border: index === 2 ? '2px solid var(--primary-orange)' : undefined
+                border: index === 0 ? '3px solid #27ae60' : index === 2 ? '3px solid #FF6B35' : undefined,
+                position: 'relative',
+                overflow: 'visible'
               }}
             >
-              <div className="service-icon">
-                {index === 0 ? '🚀' : index === 1 ? '📦' : index === 2 ? '⭐' : '👑'}
+              {index === 0 && (
+                <div style={{
+                  position: 'absolute',
+                  top: '-15px',
+                  left: '50%',
+                  transform: 'translateX(-50%)',
+                  background: '#27ae60',
+                  color: '#fff',
+                  padding: '8px 20px',
+                  borderRadius: '20px',
+                  fontSize: '12px',
+                  fontWeight: 'bold',
+                  whiteSpace: 'nowrap',
+                  boxShadow: '0 4px 10px rgba(39, 174, 96, 0.3)'
+                }}>
+                  ✨ 7 DAYS FREE TRIAL
+                </div>
+              )}
+              {index === 2 && (
+                <div style={{
+                  position: 'absolute',
+                  top: '-15px',
+                  left: '50%',
+                  transform: 'translateX(-50%)',
+                  background: '#FF6B35',
+                  color: '#fff',
+                  padding: '8px 20px',
+                  borderRadius: '20px',
+                  fontSize: '12px',
+                  fontWeight: 'bold',
+                  whiteSpace: 'nowrap',
+                  boxShadow: '0 4px 10px rgba(255, 107, 53, 0.3)'
+                }}>
+                  ⭐ MOST POPULAR
+                </div>
+              )}
+              {index === 3 && (
+                <div style={{
+                  position: 'absolute',
+                  top: '-15px',
+                  left: '50%',
+                  transform: 'translateX(-50%)',
+                  background: '#1E3D58',
+                  color: '#fff',
+                  padding: '8px 20px',
+                  borderRadius: '20px',
+                  fontSize: '12px',
+                  fontWeight: 'bold',
+                  whiteSpace: 'nowrap',
+                  boxShadow: '0 4px 10px rgba(30, 61, 88, 0.3)'
+                }}>
+                  💼 CUSTOM PRICING
+                </div>
+              )}
+              <div className="service-icon" style={{ fontSize: index === 0 ? '3rem' : undefined }}>
+                {index === 0 ? '🎁' : index === 1 ? '🚀' : index === 2 ? '📦' : index === 3 ? '⭐' : '👑'}
               </div>
               <h3>{pkg.name}</h3>
-              <h2 style={{ color: 'var(--primary-orange)', margin: '10px 0' }}>
-                {getPackagePrice(pkg)}
+              <h2 style={{ color: index === 0 ? '#27ae60' : index === 3 ? '#1E3D58' : 'var(--primary-orange)', margin: '10px 0', fontSize: index === 0 ? '2.5rem' : undefined }}>
+                {index === 0 ? 'Free' : index === 3 ? 'Custom' : getPackagePrice(pkg)}
               </h2>
+              {index === 0 && (
+                <p style={{ color: '#666', fontSize: '14px', marginBottom: '10px' }}>7 Days Free Trial</p>
+              )}
+              {index === 3 && (
+                <p style={{ color: '#666', fontSize: '14px', marginBottom: '10px' }}>Contact for Pricing</p>
+              )}
               <ul style={{ textAlign: 'left', listStyle: 'none', padding: '0' }}>
                 {pkg.features.map((feature, i) => (
                   <li key={i} style={{ padding: '10px 0', display: 'flex', alignItems: 'center', gap: '10px', borderBottom: '1px solid #eee' }}>
@@ -122,12 +184,18 @@ export default function Pricing() {
                 ))}
               </ul>
               <button 
-                onClick={() => handleSelectPackage(pkg)}
+                onClick={() => pkg.id === 0 ? router.push('/register') : pkg.id === 3 ? router.push('/contact') : handleSelectPackage(pkg)}
                 className="btn-pricing" 
-                style={{ marginTop: '20px', display: 'inline-flex', alignItems: 'center', gap: '10px' }}
+                style={{ 
+                  marginTop: '20px', 
+                  display: 'inline-flex', 
+                  alignItems: 'center', 
+                  gap: '10px',
+                  background: index === 0 ? '#27ae60' : index === 3 ? '#1E3D58' : undefined
+                }}
               >
-                <span>🎯</span>
-                {pkg.name.toLowerCase() === 'enterprise' ? 'Contact Us' : 'Select Package'}
+                <span>{index === 0 ? '🚀' : index === 3 ? '📞' : '🎯'}</span>
+                {pkg.id === 0 ? 'Start Free Trial' : pkg.id === 3 ? 'Contact Us' : 'Select Package'}
               </button>
             </div>
           ))}
