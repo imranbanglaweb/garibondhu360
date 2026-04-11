@@ -18,6 +18,9 @@ class Payment extends Model
         'amount',
         'status',
         'notes',
+        'customer_name',
+        'customer_email',
+        'customer_phone',
     ];
 
     protected $casts = [

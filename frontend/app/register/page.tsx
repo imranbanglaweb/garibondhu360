@@ -13,8 +13,6 @@ export default function RegisterPage() {
     phone: '',
     password: '',
     password_confirmation: '',
-    department: '',
-    designation: '',
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(false);
@@ -168,30 +166,6 @@ export default function RegisterPage() {
                 {errors.phone}
               </span>
             )}
-          </div>
-          
-          <div className="form-group">
-            <label>বিভাগ</label>
-            <input
-              type="text"
-              name="department"
-              value={formData.department}
-              onChange={handleChange}
-              style={inputStyle('department')}
-              placeholder="আপনার বিভাগ লিখুন"
-            />
-          </div>
-          
-          <div className="form-group">
-            <label>পদবি</label>
-            <input
-              type="text"
-              name="designation"
-              value={formData.designation}
-              onChange={handleChange}
-              style={inputStyle('designation')}
-              placeholder="আপনার পদবি লিখুন"
-            />
           </div>
           
           <div className="form-group">

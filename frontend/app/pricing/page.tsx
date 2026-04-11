@@ -19,12 +19,7 @@ interface Package {
 
 export default function Pricing() {
   const router = useRouter();
-  const [packages, setPackages] = useState<Package[]>([
-    { id: 0, name: 'Free Trial', price: 0, vehicle_limit: 5, driver_limit: 4, features: ['Fuel & Maintenance Management', 'Basic Reports', 'Vehicle Tracking', 'Driver Management', 'Requisition System', 'Up to 5 Vehicles', '4 Users'], is_active: true },
-    { id: 1, name: 'Starter', price: 1999, vehicle_limit: 5, driver_limit: 4, features: ['Requisition Manage', 'Trip Manage', 'GPS Tracker', 'Email & Notification Support', 'Multi Language Support', 'Fuel & Maintenance', 'Basic Reports', 'Vehicle Tracking', 'Driver Management', 'Up to 5 Vehicles', '4 Users'], is_active: true },
-    { id: 2, name: 'Business', price: 5000, vehicle_limit: 25, driver_limit: 10, features: ['Advanced Reports', 'Priority Support', 'Fuel & Maintenance', 'API Access', 'GPS Tracking', 'Trip Sheets', 'Maintenance Alerts', 'Up to 25 Vehicles', '10 Users'], is_active: true },
-    { id: 3, name: 'Enterprise', price: 0, vehicle_limit: 999999, driver_limit: 999999, features: ['Unlimited Vehicles', 'Unlimited Users', 'Unlimited Drivers', 'API & Integrations', 'Dedicated Account Manager', 'Custom Development', '24/7 Priority Support'], is_active: true },
-  ]);
+  const [packages, setPackages] = useState<Package[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -42,7 +37,7 @@ export default function Pricing() {
           price: parseFloat(p.price) || 0,
           vehicle_limit: parseInt(p.vehicle_limit) || 0,
           driver_limit: parseInt(p.driver_limit) || 0,
-          features: Array.isArray(p.features) ? p.features : [],
+          features: typeof p.features === 'string' ? JSON.parse(p.features || '[]') : Array.isArray(p.features) ? p.features : [],
           is_active: p.is_active ?? true
         }));
         setPackages(pkgs);
@@ -104,12 +99,12 @@ export default function Pricing() {
               className="service-card" 
               style={{ 
                 textAlign: 'center',
-                border: index === 0 ? '3px solid #27ae60' : index === 2 ? '3px solid #FF6B35' : undefined,
+                border: pkg.name.toLowerCase().includes('free') ? '3px solid #27ae60' : pkg.name.toLowerCase().includes('business') ? '3px solid #FF6B35' : undefined,
                 position: 'relative',
                 overflow: 'visible'
               }}
             >
-              {index === 0 && (
+              {pkg.name.toLowerCase().includes('free') && (
                 <div style={{
                   position: 'absolute',
                   top: '-15px',
@@ -127,7 +122,7 @@ export default function Pricing() {
                   ✨ 7 DAYS FREE TRIAL
                 </div>
               )}
-              {index === 2 && (
+              {pkg.name.toLowerCase().includes('business') && (
                 <div style={{
                   position: 'absolute',
                   top: '-15px',
@@ -145,7 +140,7 @@ export default function Pricing() {
                   ⭐ MOST POPULAR
                 </div>
               )}
-              {index === 3 && (
+              {pkg.name.toLowerCase().includes('enterprise') && (
                 <div style={{
                   position: 'absolute',
                   top: '-15px',
@@ -163,39 +158,38 @@ export default function Pricing() {
                   💼 CUSTOM PRICING
                 </div>
               )}
-              <div className="service-icon" style={{ fontSize: index === 0 ? '3rem' : undefined }}>
-                {index === 0 ? '🎁' : index === 1 ? '🚀' : index === 2 ? '📦' : index === 3 ? '⭐' : '👑'}
+              <div className="service-icon" style={{ fontSize: pkg.name.toLowerCase().includes('free') ? '3rem' : undefined }}>
+                {pkg.name.toLowerCase().includes('free') ? '🎁' : pkg.name.toLowerCase().includes('starter') ? '🚀' : pkg.name.toLowerCase().includes('business') ? '📦' : pkg.name.toLowerCase().includes('enterprise') ? '⭐' : '👑'}
               </div>
               <h3>{pkg.name}</h3>
-              <h2 style={{ color: index === 0 ? '#27ae60' : index === 3 ? '#1E3D58' : 'var(--primary-orange)', margin: '10px 0', fontSize: index === 0 ? '2.5rem' : undefined }}>
-                {index === 0 ? 'Free' : index === 3 ? 'Custom' : getPackagePrice(pkg)}
+              <h2 style={{ color: pkg.name.toLowerCase().includes('free') ? '#27ae60' : pkg.name.toLowerCase().includes('enterprise') ? '#1E3D58' : 'var(--primary-orange)', margin: '10px 0', fontSize: pkg.name.toLowerCase().includes('free') ? '2.5rem' : undefined }}>
+                {pkg.name.toLowerCase().includes('free') ? 'Free' : pkg.name.toLowerCase().includes('enterprise') ? 'Custom' : getPackagePrice(pkg)}
               </h2>
-              {index === 0 && (
-                <p style={{ color: '#666', fontSize: '14px', marginBottom: '10px' }}>7 Days Free Trial</p>
-              )}
-              {index === 3 && (
-                <p style={{ color: '#666', fontSize: '14px', marginBottom: '10px' }}>Contact for Pricing</p>
+              {pkg.price === 0 && (
+                <p style={{ color: '#666', fontSize: '14px', marginBottom: '10px' }}>
+                  {pkg.name.toLowerCase().includes('free') ? '7 Days Free Trial' : 'Contact for Pricing'}
+                </p>
               )}
               <ul style={{ textAlign: 'left', listStyle: 'none', padding: '0' }}>
-                {pkg.features.map((feature, i) => (
+                {(pkg.features || []).map((feature, i) => (
                   <li key={i} style={{ padding: '10px 0', display: 'flex', alignItems: 'center', gap: '10px', borderBottom: '1px solid #eee' }}>
                     <span style={{ color: '#27ae60', fontWeight: 'bold' }}>✓</span> {feature}
                   </li>
                 ))}
               </ul>
               <button 
-                onClick={() => pkg.id === 0 ? router.push('/register') : pkg.id === 3 ? router.push('/contact') : handleSelectPackage(pkg)}
+                onClick={() => pkg.name.toLowerCase().includes('free') ? router.push('/register') : pkg.name.toLowerCase().includes('enterprise') ? router.push('/contact') : handleSelectPackage(pkg)}
                 className="btn-pricing" 
                 style={{ 
                   marginTop: '20px', 
                   display: 'inline-flex', 
                   alignItems: 'center', 
                   gap: '10px',
-                  background: index === 0 ? '#27ae60' : index === 3 ? '#1E3D58' : undefined
+                  background: pkg.name.toLowerCase().includes('free') ? '#27ae60' : pkg.name.toLowerCase().includes('enterprise') ? '#1E3D58' : undefined
                 }}
               >
-                <span>{index === 0 ? '🚀' : index === 3 ? '📞' : '🎯'}</span>
-                {pkg.id === 0 ? 'Start Free Trial' : pkg.id === 3 ? 'Contact Us' : 'Select Package'}
+                <span>{pkg.name.toLowerCase().includes('free') ? '🚀' : pkg.name.toLowerCase().includes('enterprise') ? '📞' : '🎯'}</span>
+                {pkg.name.toLowerCase().includes('free') ? 'Start Free Trial' : pkg.name.toLowerCase().includes('enterprise') ? 'Contact Us' : 'Select Package'}
               </button>
             </div>
           ))}

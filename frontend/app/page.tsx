@@ -24,12 +24,8 @@ interface Stats {
 
 export default function Home() {
   const [loading, setLoading] = useState(false);
-  const [packages, setPackages] = useState<Package[]>([
-    { id: 0, name: 'Free Trial', price: 0, vehicle_limit: 5, driver_limit: 4, features: ['Fuel & Maintenance Management', 'Basic Reports', 'Vehicle Tracking', 'Driver Management', 'Requisition System', 'Up to 5 Vehicles', '4 Users'] },
-    { id: 1, name: 'Starter', price: 1999, vehicle_limit: 5, driver_limit: 4, features: ['Requisition Manage', 'Trip Manage', 'GPS Tracker', 'Email & Notification Support', 'Multi Language Support', 'Fuel & Maintenance', 'Basic Reports', 'Vehicle Tracking', 'Driver Management', 'Up to 5 Vehicles', '4 Users'] },
-    { id: 2, name: 'Business', price: 5000, vehicle_limit: 25, driver_limit: 10, features: ['Advanced Reports', 'Priority Support', 'Fuel & Maintenance', 'API Access', 'GPS Tracking', 'Trip Sheets', 'Maintenance Alerts', 'Up to 25 Vehicles', '10 Users'] },
-    { id: 3, name: 'Enterprise', price: 0, vehicle_limit: 999999, driver_limit: 999999, features: ['Unlimited Vehicles', 'Unlimited Users', 'Unlimited Drivers', 'API & Integrations', 'Dedicated Account Manager', 'Custom Development', '24/7 Priority Support'] },
-  ]);
+  const [packagesLoading, setPackagesLoading] = useState(true);
+  const [packages, setPackages] = useState<Package[]>([]);
   const [stats, setStats] = useState<Stats>({ totalUsers: 150, totalVehicles: 500, totalDrivers: 1000 });
 
   useEffect(() => {
@@ -46,13 +42,14 @@ export default function Home() {
       console.log('Packages response:', data);
       
       if (data.success && data.data && data.data.length > 0) {
-        // Get first 3 packages
-        const pkgs = data.data.slice(0, 3).map((p: any) => ({
+        // Get all 4 packages for home page
+        const pkgs = data.data.slice(0, 4).map((p: any) => ({
           id: p.id,
           name: p.name,
           price: parseFloat(p.price) || 0,
           vehicle_limit: parseInt(p.vehicle_limit) || 0,
-          driver_limit: parseInt(p.driver_limit) || 0
+          driver_limit: parseInt(p.driver_limit) || 0,
+          features: typeof p.features === 'string' ? JSON.parse(p.features || '[]') : Array.isArray(p.features) ? p.features : []
         }));
         setPackages(pkgs);
         console.log('Packages updated:', pkgs);
@@ -61,7 +58,8 @@ export default function Home() {
       }
     } catch (error) {
       console.error('Failed to fetch packages:', error);
-      // Keep default packages
+    } finally {
+      setPackagesLoading(false);
     }
   };
 
@@ -459,7 +457,11 @@ export default function Home() {
             maxWidth: '1200px', 
             margin: '0 auto' 
           }}>
-            {packages.map((pkg, index) => (
+            {packagesLoading ? (
+              <div style={{ textAlign: 'center', padding: '40px' }}>
+                <div className="loader"></div>
+              </div>
+            ) : packages.length === 0 ? null : packages.map((pkg, index) => (
               <div 
                 key={pkg.id} 
                 style={{ 
@@ -467,13 +469,13 @@ export default function Home() {
                   borderRadius: '20px',
                   padding: '30px',
                   textAlign: 'center',
-                  border: index === 0 ? '3px solid #27ae60' : index === 2 ? '3px solid #FF6B35' : '1px solid #eee',
+                  border: pkg.name.toLowerCase().includes('free') ? '3px solid #27ae60' : pkg.name.toLowerCase().includes('business') ? '3px solid #FF6B35' : '1px solid #eee',
                   boxShadow: '0 10px 40px rgba(0,0,0,0.1)',
                   position: 'relative',
                   transition: 'transform 0.3s ease'
                 }}
               >
-                {index === 0 && (
+                {pkg.name.toLowerCase().includes('free') && (
                   <div style={{
                     position: 'absolute',
                     top: '-15px',
@@ -488,10 +490,10 @@ export default function Home() {
                     whiteSpace: 'nowrap',
                     boxShadow: '0 4px 10px rgba(39, 174, 96, 0.3)'
                   }}>
-                    ✨ 7 DAYS FREE TRIAL
+                    ✨ BEST VALUE
                   </div>
                 )}
-                {index === 2 && (
+                {pkg.name.toLowerCase().includes('business') && (
                   <div style={{
                     position: 'absolute',
                     top: '-15px',
@@ -509,7 +511,7 @@ export default function Home() {
                     ⭐ MOST POPULAR
                   </div>
                 )}
-                {index === 3 && (
+                {pkg.name.toLowerCase().includes('enterprise') && (
                   <div style={{
                     position: 'absolute',
                     top: '-15px',
@@ -528,35 +530,35 @@ export default function Home() {
                   </div>
                 )}
                 <div style={{ fontSize: '3rem', marginBottom: '15px' }}>
-                  {index === 0 ? '🎁' : index === 1 ? '🚀' : index === 2 ? '📦' : '👑'}
+                  {pkg.name.toLowerCase().includes('free') ? '🎁' : pkg.name.toLowerCase().includes('starter') ? '🚀' : pkg.name.toLowerCase().includes('business') ? '📦' : pkg.name.toLowerCase().includes('enterprise') ? '⭐' : '👑'}
                 </div>
                 <h3 style={{ fontSize: '1.5rem', marginBottom: '10px', color: '#1E3D58' }}>{pkg.name}</h3>
                 <div style={{ 
-                  fontSize: index === 0 ? '2.5rem' : '2rem', 
-                  color: index === 0 ? '#27ae60' : index === 3 ? '#1E3D58' : '#FF6B35', 
+                  fontSize: pkg.name.toLowerCase().includes('free') ? '2.5rem' : '2rem', 
+                  color: pkg.name.toLowerCase().includes('free') ? '#27ae60' : pkg.name.toLowerCase().includes('enterprise') ? '#1E3D58' : '#FF6B35', 
                   fontWeight: 'bold',
-                  marginBottom: index === 0 ? '5px' : '0'
+                  marginBottom: pkg.name.toLowerCase().includes('free') ? '5px' : '0'
                 }}>
-                  {index === 0 ? 'Free' : index === 3 ? 'Custom' : `৳${pkg.price.toLocaleString()}`}
+                  {pkg.name.toLowerCase().includes('free') ? 'Free' : pkg.name.toLowerCase().includes('enterprise') ? 'Custom' : `৳${pkg.price.toLocaleString()}`}
                 </div>
-                {index === 0 && (
+                {pkg.name.toLowerCase().includes('free') && (
                   <p style={{ color: '#666', fontSize: '14px', marginBottom: '15px' }}>7 Days Free Trial</p>
                 )}
-                {index === 3 && (
+                {pkg.name.toLowerCase().includes('enterprise') && (
                   <p style={{ color: '#666', fontSize: '14px', marginBottom: '15px' }}>Contact for Pricing</p>
                 )}
-                {index > 0 && index < 3 && (
+                {!pkg.name.toLowerCase().includes('enterprise') && (
                   <p style={{ color: '#666', fontSize: '14px', marginBottom: '15px' }}>টাকা/মাস</p>
                 )}
                 <ul style={{ textAlign: 'left', listStyle: 'none', padding: '0', margin: '20px 0' }}>
-                  {pkg.features?.map((feature, i) => (
+                  {(pkg.features || []).map((feature, i) => (
                     <li key={i} style={{ padding: '8px 0', display: 'flex', alignItems: 'center', gap: '10px', fontSize: '14px', color: '#555' }}>
                       <span style={{ color: '#27ae60', fontWeight: 'bold' }}>✓</span> {feature}
                     </li>
                   ))}
                 </ul>
                 <Link 
-                  href={pkg.id === 0 ? '/register' : pkg.id === 3 ? '/contact' : `/payment?package=${pkg.id}`}
+                  href={pkg.name.toLowerCase().includes('enterprise') ? '/contact' : `/payment?package=${pkg.id}`}
                   style={{
                     display: 'inline-flex',
                     alignItems: 'center',
@@ -564,13 +566,13 @@ export default function Home() {
                     padding: '12px 25px',
                     borderRadius: '50px',
                     textDecoration: 'none',
-                    background: index === 0 ? '#27ae60' : index === 2 ? '#FF6B35' : '#1E3D58',
+                    background: pkg.name.toLowerCase().includes('free') ? '#27ae60' : pkg.name.toLowerCase().includes('business') ? '#FF6B35' : '#1E3D58',
                     color: '#fff',
                     fontWeight: '600',
                     marginTop: '10px'
                   }}
                 >
-                  {index === 0 ? '🚀 Start Free Trial' : index === 3 ? '📞 Contact Us' : `🎯 এই প্যাকেজ নিন`}
+                  {pkg.name.toLowerCase().includes('enterprise') ? '📞 Contact Us' : `🎯 এই প্যাকেজ নিন`}
                 </Link>
               </div>
             ))}
