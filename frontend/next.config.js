@@ -2,18 +2,11 @@
 const nextConfig = {
   output: 'export',
   reactStrictMode: true,
-  images: {
+ Images: {
     unoptimized: true,
   },
-  // API proxy for development (optional - helps avoid CORS)
-  async rewrites() {
-    return [
-      {
-        source: '/api/:path*',
-        destination: 'http://localhost:8000/api/:path*',
-      },
-    ];
-  },
+  trailingSlash: true,
+  basePath: process.env.NEXT_PUBLIC_BASE_PATH || '',
 };
 
 module.exports = nextConfig;
