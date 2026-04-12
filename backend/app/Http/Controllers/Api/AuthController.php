@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Services\WebhookService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -11,6 +12,13 @@ use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
+    protected $webhookService;
+
+    public function __construct(WebhookService $webhookService)
+    {
+        $this->webhookService = $webhookService;
+    }
+
     /**
      * Register a new user.
      */
@@ -19,7 +27,7 @@ class AuthController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|min:2|max:255|regex:/^[a-zA-Z\s]+$/u',
             'email' => 'required|string|email:rfc,dns|max:255|unique:users',
-            'phone' => 'required|regex:/^01[3-9]\d{8}$/u|unique:users',
+            'cell_phone' => 'required|regex:/^01[3-9]\d{8}$/u|unique:users',
             'password' => 'required|string|min:6|confirmed|regex:/^(?=.*[a-zA-Z])(?=.*\d).+$/u',
             'department' => 'nullable|string|max:255',
             'designation' => 'nullable|string|max:255',
@@ -30,9 +38,9 @@ class AuthController extends Controller
             'email.required' => 'ইমেইল আবশ্যক',
             'email.email' => 'সঠিক ইমেইল ঠিকানা দিন',
             'email.unique' => 'এই ইমেইল ইতিমধ্যে ব্যবহৃত হয়েছে',
-            'phone.required' => 'ফোন নম্বর আবশ্যক',
-            'phone.regex' => 'সঠিক বাংলাদেশি ফোন নম্বর দিন (০১XXXXXXXXX)',
-            'phone.unique' => 'এই ফোন নম্বর ইতিমধ্যে ব্যবহৃত হয়েছে',
+            'cell_phone.required' => 'ফোন নম্বর আবশ্যক',
+            'cell_phone.regex' => 'সঠিক বাংলাদেশি ফোন নম্বর দিন (০১XXXXXXXXX)',
+            'cell_phone.unique' => 'এই ফোন নম্বর ইতিমধ্যে ব্যবহৃত হয়েছে',
             'password.required' => 'পাসওয়ার্ড আবশ্যক',
             'password.min' => 'পাসওয়ার্ড কমপক্ষে ৬ অক্ষরের হতে হবে',
             'password.confirmed' => 'পাসওয়ার্ড মিলেনি',
@@ -42,12 +50,15 @@ class AuthController extends Controller
         $user = User::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
-            'phone' => $validated['phone'],
+            'cell_phone' => $validated['cell_phone'],
             'password' => Hash::make($validated['password']),
             'role' => User::ROLE_EMPLOYEE,
             'department' => $validated['department'] ?? null,
             'designation' => $validated['designation'] ?? null,
         ]);
+
+        // Sync to external app
+        $this->webhookService->syncUserRegistered($user);
 
         $token = $user->createToken('auth-token')->plainTextToken;
 

@@ -196,7 +196,7 @@ export default function SettingsPage() {
               </div>
               <div>
                 <label style={{ display: 'block', marginBottom: '8px', fontWeight: '500', color: '#666' }}>ফোন</label>
-                <div style={{ padding: '12px 15px', backgroundColor: 'var(--light-gray)', borderRadius: '8px' }}>{user?.phone}</div>
+                <div style={{ padding: '12px 15px', backgroundColor: 'var(--light-gray)', borderRadius: '8px' }}>{user?.cell_phone}</div>
               </div>
               <div>
                 <label style={{ display: 'block', marginBottom: '8px', fontWeight: '500', color: '#666' }}>বিভাগ</label>

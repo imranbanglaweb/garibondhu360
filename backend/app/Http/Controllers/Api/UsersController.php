@@ -34,7 +34,7 @@ class UsersController extends Controller
             $query->where(function ($q) use ($request) {
                 $q->where('name', 'like', "%{$request->search}%")
                   ->orWhere('email', 'like', "%{$request->search}%")
-                  ->orWhere('phone', 'like', "%{$request->search}%");
+                  ->orWhere('cell_phone', 'like', "%{$request->search}%");
             });
         }
 
@@ -72,7 +72,7 @@ class UsersController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email:rfc,dns|max:255|unique:users',
-            'phone' => 'required|regex:/^01[3-9]\d{8}$/u|unique:users',
+            'cell_phone' => 'required|regex:/^01[3-9]\d{8}$/u|unique:users',
             'password' => 'required|string|min:6',
             'role' => 'required|in:admin,transport_admin,department_head,employee,driver',
             'department' => 'nullable|string|max:255',
@@ -103,7 +103,7 @@ class UsersController extends Controller
         $validated = $request->validate([
             'name' => 'sometimes|string|max:255',
             'email' => 'sometimes|string|email:rfc,dns|max:255|unique:users,email,' . $user->id,
-            'phone' => 'sometimes|regex:/^01[3-9]\d{8}$/u|unique:users,phone,' . $user->id,
+            'cell_phone' => 'sometimes|regex:/^01[3-9]\d{8}$/u|unique:users,cell_phone,' . $user->id,
             'password' => 'sometimes|string|min:6',
             'role' => 'sometimes|in:admin,transport_admin,department_head,employee,driver',
             'department' => 'nullable|string|max:255',

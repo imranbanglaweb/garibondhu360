@@ -38,7 +38,7 @@ export const authAPI = {
   register: (data: {
     name: string;
     email: string;
-    phone: string;
+    cell_phone: string;
     password: string;
     password_confirmation: string;
     department?: string;

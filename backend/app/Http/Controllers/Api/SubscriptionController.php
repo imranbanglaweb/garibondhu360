@@ -107,6 +107,13 @@ class SubscriptionController extends Controller
             ->where('status', Subscription::STATUS_ACTIVE)
             ->first();
         
+        if ($subscription) {
+            $subscription->start_date = $subscription->start_date;
+            $subscription->end_date = $subscription->end_date;
+            $subscription->expires_at = $subscription->end_date;
+            $subscription->started_at = $subscription->start_date;
+        }
+        
         return response()->json([
             'success' => true,
             'data' => $subscription,
@@ -233,6 +240,9 @@ class SubscriptionController extends Controller
         
         if ($request->status === 'verified') {
             $payment->verify();
+            
+            // Refresh subscription with package
+            $payment->load('subscription.package');
         } else {
             $payment->reject($request->notes);
         }

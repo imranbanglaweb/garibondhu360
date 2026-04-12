@@ -20,7 +20,7 @@ interface User {
   id: number;
   name: string;
   email: string;
-  phone: string;
+  cell_phone: string;
   role: string;
   department?: string;
   designation?: string;
@@ -34,7 +34,7 @@ interface AuthContextType {
   register: (data: {
     name: string;
     email: string;
-    phone: string;
+    cell_phone: string;
     password: string;
     password_confirmation: string;
     department?: string;
@@ -77,7 +77,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const register = async (data: {
     name: string;
     email: string;
-    phone: string;
+    cell_phone: string;
     password: string;
     password_confirmation: string;
     department?: string;

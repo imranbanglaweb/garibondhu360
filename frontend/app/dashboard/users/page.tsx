@@ -10,7 +10,7 @@ interface User {
   id: number;
   name: string;
   email: string;
-  phone: string;
+  cell_phone: string;
   role: string;
   department: string;
   designation: string;
@@ -251,7 +251,7 @@ export default function UsersPage() {
                 <tr key={user.id} style={{ borderBottom: '1px solid var(--light-gray)' }}>
                   <td style={{ padding: '12px' }}>{user.name}</td>
                   <td style={{ padding: '12px' }}>{user.email}</td>
-                  <td style={{ padding: '12px' }}>{user.phone}</td>
+                  <td style={{ padding: '12px' }}>{user.cell_phone}</td>
                   <td style={{ padding: '12px' }}>
                     <span style={{ 
                       padding: '5px 12px', 

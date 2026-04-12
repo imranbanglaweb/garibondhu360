@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Services\WebhookService;
 
 class Payment extends Model
 {
@@ -76,7 +77,25 @@ class Payment extends Model
 
         // Activate the subscription if exists
         if ($this->subscription) {
-            $this->subscription->activate();
+            $this->subscription = $this->subscription->activate();
+            $this->subscription->load('package');
+            
+            // Sync to external app - subscription activated
+            try {
+                $webhookService = app(WebhookService::class);
+                $webhookService->syncSubscriptionActivated($this->subscription);
+            } catch (\Exception $e) {
+                // Log but don't break the flow
+                \Illuminate\Support\Facades\Log::error('Webhook sync failed: ' . $e->getMessage());
+            }
+        }
+        
+        // Sync to external app - payment verified
+        try {
+            $webhookService = app(WebhookService::class);
+            $webhookService->syncPaymentVerified($this);
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error('Webhook sync failed: ' . $e->getMessage());
         }
     }
 

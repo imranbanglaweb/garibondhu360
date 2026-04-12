@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Log;
 
 class Subscription extends Model
 {
@@ -73,9 +74,18 @@ class Subscription extends Model
     public function activate($startDate = null, $endDate = null)
     {
         $this->status = self::STATUS_ACTIVE;
-        $this->start_date = $startDate ?? now()->toDateString();
-        $this->end_date = $endDate ?? now()->addMonth()->toDateString();
+        
+        // Set dates only if not already set
+        if (empty($this->start_date)) {
+            $this->start_date = $startDate ?? date('Y-m-d');
+        }
+        if (empty($this->end_date)) {
+            $this->end_date = $endDate ?? date('Y-m-d', strtotime('+1 month'));
+        }
+        
         $this->save();
+        
+        return $this;
     }
 
     /**
@@ -85,5 +95,21 @@ class Subscription extends Model
     {
         $this->status = self::STATUS_EXPIRED;
         $this->save();
+    }
+
+    /**
+     * Get the expiration date as expires_at for API response.
+     */
+    public function getExpiresAtAttribute()
+    {
+        return $this->end_date;
+    }
+
+    /**
+     * Get the start date formatted.
+     */
+    public function getStartedAtAttribute()
+    {
+        return $this->start_date;
     }
 }

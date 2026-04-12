@@ -12,6 +12,7 @@ use App\Http\Controllers\Api\DemoRequestController;
 use App\Http\Controllers\Api\SubscriptionController;
 use App\Http\Controllers\Api\PublicController;
 use App\Http\Controllers\Api\UsersController;
+use App\Http\Controllers\Api\WebhookController;
 
 /*
 |--------------------------------------------------------------------------
@@ -92,4 +93,11 @@ Route::middleware('token.auth')->group(function () {
     Route::post('/users', [UsersController::class, 'store']);
     Route::put('/users/{user}', [UsersController::class, 'update']);
     Route::delete('/users/{user}', [UsersController::class, 'destroy']);
+    
+    // Webhooks (Admin)
+    Route::get('/webhooks', [WebhookController::class, 'index']);
+    Route::post('/webhooks', [WebhookController::class, 'store']);
+    Route::put('/webhooks/{webhook}', [WebhookController::class, 'update']);
+    Route::delete('/webhooks/{webhook}', [WebhookController::class, 'destroy']);
+    Route::post('/webhooks/test', [WebhookController::class, 'test']);
 });

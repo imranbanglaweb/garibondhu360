@@ -10,7 +10,7 @@ export default function RegisterPage() {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    phone: '',
+    cell_phone: '',
     password: '',
     password_confirmation: '',
   });
@@ -39,10 +39,10 @@ export default function RegisterPage() {
     }
 
     // Phone validation
-    if (!formData.phone.trim()) {
-      newErrors.phone = 'ফোন নম্বর আবশ্যক';
-    } else if (!/^01[3-9]\d{8}$/.test(formData.phone)) {
-      newErrors.phone = 'সঠিক বাংলাদেশি ফোন নম্বর দিন (০১XXXXXXXXX)';
+    if (!formData.cell_phone.trim()) {
+      newErrors.cell_phone = 'ফোন নম্বর আবশ্যক';
+    } else if (!/^01[3-9]\d{8}$/.test(formData.cell_phone)) {
+      newErrors.cell_phone = 'সঠিক বাংলাদেশি ফোন নম্বর দিন (০১XXXXXXXXX)';
     }
 
     // Password validation
@@ -155,15 +155,15 @@ export default function RegisterPage() {
             <label>ফোন *</label>
             <input
               type="tel"
-              name="phone"
-              value={formData.phone}
+              name="cell_phone"
+              value={formData.cell_phone}
               onChange={handleChange}
-              style={inputStyle('phone')}
+              style={inputStyle('cell_phone')}
               placeholder="০১XXXXXXXXX"
             />
-            {errors.phone && (
+            {errors.cell_phone && (
               <span style={{ color: '#dc3545', fontSize: '14px', marginTop: '5px', display: 'block' }}>
-                {errors.phone}
+                {errors.cell_phone}
               </span>
             )}
           </div>
