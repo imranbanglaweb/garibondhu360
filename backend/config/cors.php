@@ -1,19 +1,12 @@
 <?php
 
 return [
-    'paths' => ['api/*', 'sanctum/csrf-cookie', '/*'],
-
-    'allowed_methods' => ['*'],
-
-    'allowed_origins' => ['http://localhost', 'http://localhost:80', 'http://localhost:3000', 'http://127.0.0.1', 'http://127.0.0.1:80', 'http://127.0.0.1:3000'],
-
+    'paths' => [], // Disabled - using custom middleware
+    'allowed_methods' => [],
+    'allowed_origins' => [],
     'allowed_origins_patterns' => [],
-
-    'allowed_headers' => ['*'],
-
+    'allowed_headers' => [],
     'exposed_headers' => [],
-
-    'max_age' => 86400,
-
-    'supports_credentials' => true,
+    'max_age' => 0,
+    'supports_credentials' => false,
 ];
