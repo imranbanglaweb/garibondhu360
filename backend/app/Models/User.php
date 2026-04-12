@@ -79,6 +79,14 @@ class User extends Authenticatable
     }
 
     /**
+     * Get the payments for this user.
+     */
+    public function payments()
+    {
+        return $this->hasMany(Payment::class);
+    }
+
+    /**
      * Check if user has active subscription.
      */
     public function hasActiveSubscription()

@@ -5,6 +5,7 @@ import { useSearchParams, useRouter } from 'next/navigation';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { subscriptionAPI } from '../services/api';
+import { useAuth } from '../context/AuthContext';
 
 interface Package {
   id: number;
@@ -19,6 +20,7 @@ interface Package {
 function PaymentContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
+  const { isAuthenticated, loading: authLoading } = useAuth();
   const packageId = searchParams.get('package');
   
   const [packageData, setPackageData] = useState<Package | null>(null);
@@ -36,10 +38,16 @@ function PaymentContent() {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    if (packageId) {
+    if (!authLoading && !isAuthenticated) {
+      router.push('/login?redirect=/payment%3Fpackage=' + packageId);
+    }
+  }, [authLoading, isAuthenticated, router, packageId]);
+
+  useEffect(() => {
+    if (packageId && isAuthenticated) {
       fetchPackage();
     }
-  }, [packageId]);
+  }, [packageId, isAuthenticated]);
 
   const fetchPackage = async () => {
     try {

@@ -1,5 +1,10 @@
 import axios from 'axios';
-import Cookies from 'js-cookie';
+
+// Simple token helpers
+const getToken = (): string | null => {
+  if (typeof window === 'undefined') return null;
+  return localStorage.getItem('token');
+};
 
 const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL || '/api',
@@ -7,27 +12,23 @@ const api = axios.create({
     'Content-Type': 'application/json',
     'Accept': 'application/json',
   },
+  withCredentials: true,
 });
 
 // Add auth token to requests
 api.interceptors.request.use((config) => {
-  const token = Cookies.get('token');
+  const token = getToken();
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
   return config;
 });
 
-// Handle auth errors
+// Handle errors - just reject, don't redirect
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response?.status === 401) {
-      Cookies.remove('token');
-      if (typeof window !== 'undefined') {
-        window.location.href = '/login';
-      }
-    }
+    // Just reject - pages handle their own auth redirects
     return Promise.reject(error);
   }
 );
@@ -173,6 +174,16 @@ export const subscriptionAPI = {
 // Public API (no auth required)
 export const publicAPI = {
   stats: () => api.get('/public-stats'),
+};
+
+// Users API (Admin/TransportAdmin)
+export const usersAPI = {
+  list: (params?: { role?: string; department?: string; search?: string; page?: number; per_page?: number }) =>
+    api.get('/users', { params }),
+  get: (id: number) => api.get(`/users/${id}`),
+  create: (data: any) => api.post('/users', data),
+  update: (id: number, data: any) => api.put(`/users/${id}`, data),
+  delete: (id: number) => api.delete(`/users/${id}`),
 };
 
 export default api;

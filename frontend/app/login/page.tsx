@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useAuth } from '../context/AuthContext';
@@ -11,8 +11,22 @@ export default function LoginPage() {
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(false);
-  const { login } = useAuth();
+  const { login, isAuthenticated, loading: authLoading } = useAuth();
   const router = useRouter();
+
+  useEffect(() => {
+    if (!authLoading && isAuthenticated) {
+      router.push('/dashboard');
+    }
+  }, [authLoading, isAuthenticated, router]);
+
+  if (authLoading) {
+    return (
+      <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <p>লোড হচ্ছে...</p>
+      </div>
+    );
+  }
 
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
@@ -42,14 +56,25 @@ export default function LoginPage() {
     }
     
     setLoading(true);
+    setErrors({});
     
     try {
       await login(email, password);
+      
+      const token = localStorage.getItem('token');
+      if (!token) {
+        toast.error('টোকেন সংরক্ষণ হয়নি');
+        setLoading(false);
+        return;
+      }
+      
       toast.success('লগইন সফল হয়েছে!');
       router.push('/dashboard');
     } catch (error: any) {
-      if (error.response?.data?.errors) {
-        setErrors(error.response.data.errors);
+      if (!error.response) {
+        setErrors({ email: 'সার্ভারে সংযোগ করতে ব্যর্থ। অনুগ্রহ পরে চেষ্টা করুন।' });
+      } else if (error.response?.status === 401) {
+        setErrors({ email: 'ইমেইল বা পাসওয়ার্ড সঠিক নয়' });
         toast.error('ইমেইল বা পাসওয়ার্ড সঠিক নয়');
       } else {
         toast.error(error.response?.data?.message || 'লগইন ব্যর্থ হয়েছে');

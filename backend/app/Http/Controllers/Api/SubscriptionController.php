@@ -8,6 +8,7 @@ use App\Models\Subscription;
 use App\Models\Payment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class SubscriptionController extends Controller
 {
@@ -49,17 +50,20 @@ class SubscriptionController extends Controller
         ]);
 
         $package = Package::findOrFail($request->package_id);
-        $userId = $request->user_id ?? null;
+        
+        // Use authenticated user or explicitly provided user_id
+        $user = Auth::user();
+        $userId = $user ? $user->id : ($request->user_id ?? null);
 
-        // Create subscription (user_id can be null for guest)
+        // Create subscription
         $subscription = Subscription::create([
             'user_id' => $userId,
             'package_id' => $package->id,
             'status' => Subscription::STATUS_PENDING,
             'amount' => $package->price,
-            'customer_name' => $request->customer_name,
-            'customer_email' => $request->customer_email,
-            'customer_phone' => $request->customer_phone,
+            'customer_name' => $request->customer_name ?? ($user ? $user->name : null),
+            'customer_email' => $request->customer_email ?? ($user ? $user->email : null),
+            'customer_phone' => $request->customer_phone ?? ($user ? $user->phone : null),
         ]);
 
         return response()->json([
@@ -78,6 +82,9 @@ class SubscriptionController extends Controller
     public function mySubscriptions()
     {
         $user = Auth::user();
+        if (!$user) {
+            return response()->json(['success' => true, 'data' => []]);
+        }
         $subscriptions = $user->subscriptions()->with('package')->latest()->get();
         
         return response()->json([
@@ -92,6 +99,9 @@ class SubscriptionController extends Controller
     public function myActiveSubscription()
     {
         $user = Auth::user();
+        if (!$user) {
+            return response()->json(['success' => true, 'data' => null]);
+        }
         $subscription = $user->subscriptions()
             ->with('package')
             ->where('status', Subscription::STATUS_ACTIVE)
@@ -130,18 +140,22 @@ class SubscriptionController extends Controller
             ], 422);
         }
 
-        // Create payment record (user_id can be null for guest)
+        // Use authenticated user or explicitly provided user_id
+        $user = Auth::user();
+        $userId = $user ? $user->id : ($request->user_id ?? null);
+
+        // Create payment record
         $payment = Payment::create([
-            'user_id' => $request->user_id,
+            'user_id' => $userId,
             'subscription_id' => $subscription->id,
             'payment_method' => $request->payment_method,
             'transaction_id' => $request->transaction_id,
             'sender_number' => $request->sender_number,
             'amount' => $request->amount,
             'status' => Payment::STATUS_PENDING,
-            'customer_name' => $request->customer_name,
-            'customer_email' => $request->customer_email,
-            'customer_phone' => $request->customer_phone,
+            'customer_name' => $request->customer_name ?? ($user ? $user->name : null),
+            'customer_email' => $request->customer_email ?? ($user ? $user->email : null),
+            'customer_phone' => $request->customer_phone ?? ($user ? $user->phone : null),
         ]);
 
         return response()->json([
@@ -157,6 +171,9 @@ class SubscriptionController extends Controller
     public function myPayments()
     {
         $user = Auth::user();
+        if (!$user) {
+            return response()->json(['success' => true, 'data' => []]);
+        }
         $payments = $user->payments()->with('subscription.package')->latest()->get();
         
         return response()->json([

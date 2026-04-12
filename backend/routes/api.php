@@ -11,6 +11,7 @@ use App\Http\Controllers\Api\ContactController;
 use App\Http\Controllers\Api\DemoRequestController;
 use App\Http\Controllers\Api\SubscriptionController;
 use App\Http\Controllers\Api\PublicController;
+use App\Http\Controllers\Api\UsersController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,13 +37,14 @@ Route::get('/public-stats', [PublicController::class, 'stats']);
 Route::get('/packages', [SubscriptionController::class, 'packages']);
 Route::get('/packages/{id}', [SubscriptionController::class, 'package']);
 
-// Subscribe & Payment (Public - for testing)
-Route::post('/subscribe', [SubscriptionController::class, 'subscribe']);
-Route::post('/submit-payment', [SubscriptionController::class, 'submitPayment']);
-
-// Protected Routes
-Route::middleware('auth:sanctum')->group(function () {
-    // Auth
+// Protected Routes - custom token authentication
+Route::middleware('token.auth')->group(function () {
+    Route::post('/subscribe', [SubscriptionController::class, 'subscribe']);
+    Route::post('/submit-payment', [SubscriptionController::class, 'submitPayment']);
+    Route::get('/my-payments', [SubscriptionController::class, 'myPayments']);
+    Route::get('/my-payments/{id}', [SubscriptionController::class, 'payment']);
+    Route::get('/my-subscriptions', [SubscriptionController::class, 'mySubscriptions']);
+    Route::get('/my-active-subscription', [SubscriptionController::class, 'myActiveSubscription']);
     Route::get('/user', [AuthController::class, 'user']);
     Route::post('/logout', [AuthController::class, 'logout']);
     
@@ -83,4 +85,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/all-payments', [SubscriptionController::class, 'allPayments']);
     Route::patch('/payments/{id}/verify', [SubscriptionController::class, 'verifyPayment']);
     Route::get('/all-subscriptions', [SubscriptionController::class, 'allSubscriptions']);
+    
+    // Users (Admin/TransportAdmin)
+    Route::get('/users', [UsersController::class, 'index']);
+    Route::get('/users/{user}', [UsersController::class, 'show']);
+    Route::post('/users', [UsersController::class, 'store']);
+    Route::put('/users/{user}', [UsersController::class, 'update']);
+    Route::delete('/users/{user}', [UsersController::class, 'destroy']);
 });

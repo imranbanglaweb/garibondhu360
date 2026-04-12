@@ -1,8 +1,20 @@
 'use client';
 
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import Cookies from 'js-cookie';
 import { authAPI } from '../services/api';
+
+const getToken = () => {
+  if (typeof window === 'undefined') return null;
+  return localStorage.getItem('token');
+};
+
+const setToken = (token: string) => {
+  if (typeof window !== 'undefined') localStorage.setItem('token', token);
+};
+
+const removeToken = () => {
+  if (typeof window !== 'undefined') localStorage.removeItem('token');
+};
 
 interface User {
   id: number;
@@ -43,13 +55,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const checkAuth = async () => {
-    const token = Cookies.get('token');
+    const token = getToken();
     if (token) {
       try {
         const response = await authAPI.user();
         setUser(response.data);
       } catch (error) {
-        Cookies.remove('token');
+        removeToken();
       }
     }
     setLoading(false);
@@ -58,7 +70,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const login = async (email: string, password: string) => {
     const response = await authAPI.login({ email, password });
     const { user, token } = response.data;
-    Cookies.set('token', token, { expires: 7 });
+    setToken(token);
     setUser(user);
   };
 
@@ -73,7 +85,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }) => {
     const response = await authAPI.register(data);
     const { user, token } = response.data;
-    Cookies.set('token', token, { expires: 7 });
+    setToken(token);
     setUser(user);
   };
 
@@ -81,7 +93,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     try {
       await authAPI.logout();
     } finally {
-      Cookies.remove('token');
+      removeToken();
       setUser(null);
     }
   };
