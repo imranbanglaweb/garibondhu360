@@ -15,15 +15,23 @@ export default function Demo() {
             </p>
             <div style={{ marginTop: '40px' }}>
               <div style={{ 
-                background: '#f5f5f5', 
-                padding: '20px', 
-                borderRadius: '10px',
+                position: 'relative',
+                paddingBottom: '56.25%',
+                height: 0,
+                overflow: 'hidden',
                 maxWidth: '800px',
-                margin: '0 auto'
+                margin: '0 auto',
+                borderRadius: '10px',
+                boxShadow: '0 4px 20px rgba(0,0,0,0.15)'
               }}>
-                <p style={{ fontSize: '18px', color: '#666' }}>
-                  📹 ডেমো ভিডিও শীঘ্রই আপলোড করা হবে
-                </p>
+                <iframe
+                  style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
+                  src="https://www.youtube.com/embed/ICgS0FpfFq8"
+                  title="Fleet Management System Demo"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                />
               </div>
             </div>
             <div style={{ marginTop: '40px' }}>
