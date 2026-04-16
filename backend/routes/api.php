@@ -85,6 +85,7 @@ Route::middleware('token.auth')->group(function () {
     // Subscriptions & Payments (Admin)
     Route::get('/all-payments', [SubscriptionController::class, 'allPayments']);
     Route::patch('/payments/{id}/verify', [SubscriptionController::class, 'verifyPayment']);
+    Route::patch('/payments/{id}/approve', [SubscriptionController::class, 'approvePayment']);
     Route::get('/all-subscriptions', [SubscriptionController::class, 'allSubscriptions']);
     
     // Users (Admin/TransportAdmin)

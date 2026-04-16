@@ -86,18 +86,34 @@ export default function LoginPage() {
 
   const inputStyle = (fieldName: string) => ({
     width: '100%',
-    padding: '12px',
-    border: `1px solid ${errors[fieldName] ? '#dc3545' : '#ddd'}`,
-    borderRadius: '5px',
-    fontSize: '16px',
+    padding: '14px 16px',
+    border: `2px solid ${errors[fieldName] ? '#dc3545' : '#e0e0e0'}`,
+    borderRadius: '10px',
+    fontSize: '15px',
     outline: 'none',
-    transition: 'border-color 0.3s',
+    transition: 'all 0.3s',
+    background: '#fafafa',
   });
 
   return (
-    <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--light-gray)' }}>
-      <div className="auth-container">
-        <h2>লগইন</h2>
+    <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)', padding: '20px' }}>
+      <div style={{ 
+        background: 'rgba(255, 255, 255, 0.98)', 
+        borderRadius: '20px', 
+        boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.4)',
+        padding: '50px 40px',
+        maxWidth: '420px',
+        width: '100%'
+      }}>
+        <div style={{ textAlign: 'center', marginBottom: '35px' }}>
+          <img 
+            src="/images/logo.png" 
+            alt="গাড়িবন্ধু ৩৬০" 
+            style={{ width: '120px', marginBottom: '15px' }}
+          />
+          <h2 style={{ margin: 0, color: '#1a1a2e', fontSize: '28px', fontWeight: '700' }}>গাড়িবন্ধু ৩৬০</h2>
+          <p style={{ color: '#666', marginTop: '8px', fontSize: '14px' }}>স্মার্ট ট্রান্সপোর্ট ম্যানেজমেন্ট সিস্টেম</p>
+        </div>
         
         <form onSubmit={handleSubmit}>
           <div className="form-group">
@@ -138,14 +154,32 @@ export default function LoginPage() {
             )}
           </div>
           
-          <button type="submit" className="btn btn-primary" style={{ width: '100%' }} disabled={loading}>
-            {loading ? 'লোড হচ্ছে...' : 'লগইন'}
+          <button type="submit" style={{ 
+            width: '100%', 
+            padding: '14px', 
+            background: 'linear-gradient(135deg, #ff6b35 0%, #f7931e 100%)',
+            color: 'white',
+            border: 'none',
+            borderRadius: '10px',
+            fontSize: '16px',
+            fontWeight: '600',
+            cursor: loading ? 'not-allowed' : 'pointer',
+            opacity: loading ? 0.7 : 1,
+            transition: 'all 0.3s'
+          }} disabled={loading}>
+            {loading ? 'লোড হচ্ছে...' : 'লগইন করুন'}
           </button>
         </form>
         
-        <p style={{ textAlign: 'center', marginTop: '20px' }}>
-          অ্যাকাউন্ট নেই? <Link href="/register" style={{ color: 'var(--primary-orange)' }}>রেজিস্টার করুন</Link>
+        <p style={{ textAlign: 'center', marginTop: '25px', color: '#666' }}>
+          অ্যাকাউন্ট নেই? <Link href="/register" style={{ color: '#ff6b35', fontWeight: '600' }}>রেজিস্টার করুন</Link>
         </p>
+        
+        <div style={{ textAlign: 'center', marginTop: '30px', paddingTop: '20px', borderTop: '1px solid #eee' }}>
+          <p style={{ color: '#999', fontSize: '12px', margin: 0 }}>
+            © ২০২৬ গাড়িবন্ধু ৩৬০। সর্বস্বত্ব সংরক্ষিত।
+          </p>
+        </div>
       </div>
     </div>
   );

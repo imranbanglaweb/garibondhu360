@@ -2,6 +2,7 @@
 
 import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
+import Link from 'next/link';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { subscriptionAPI } from '../services/api';
@@ -46,6 +47,8 @@ function PaymentContent() {
   useEffect(() => {
     if (packageId && isAuthenticated) {
       fetchPackage();
+    } else if (!packageId && isAuthenticated) {
+      setLoading(false);
     }
   }, [packageId, isAuthenticated]);
 
@@ -167,13 +170,46 @@ function PaymentContent() {
     return (
       <>
         <Header />
-        <section className="hero" style={{ padding: '60px 0' }}>
+        <section className="hero" style={{ padding: '40px 0' }}>
           <div className="hero-container">
-            <div className="hero-content" style={{ textAlign: 'center' }}>
-              <h1>Package <span>Not Found</span></h1>
-              <a href="/pricing" className="btn btn-primary" style={{ marginTop: '20px' }}>
-                Go to Pricing
+            <div className="hero-content">
+              <h1>পেমেন্ট <span>করুন</span></h1>
+              <p className="hero-text">
+                আপনার সাবস্ক্রিপশন প্যাকেজের জন্য পেমেন্ট করুন
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section className="services">
+          <div style={{ maxWidth: '900px', margin: '0 auto', padding: '0 20px' }}>
+            <div className="service-card" style={{ textAlign: 'center', padding: '40px' }}>
+              <div style={{ fontSize: '60px', marginBottom: '20px' }}>💳</div>
+              <h3 style={{ marginBottom: '15px' }}>কোনো প্যাকেজ নির্বাচন করা হয়নি</h3>
+              <p style={{ color: '#666', marginBottom: '25px' }}>
+                অনুগ্রহ করে একটি সাবস্ক্রিপশন প্যাকেজ নির্বাচন করুন
+              </p>
+              <a href="/pricing" className="btn btn-primary" style={{ display: 'inline-flex', alignItems: 'center', gap: '10px' }}>
+                <span>📦</span> প্যাকেজ দেখুন
               </a>
+            </div>
+
+            <div className="service-card" style={{ marginTop: '30px' }}>
+              <h3 style={{ marginBottom: '20px' }}>পেমেন্ট পদ্ধতি</h3>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '20px' }}>
+                {paymentMethods.map((method) => (
+                  <div key={method.id} className="service-card" style={{ textAlign: 'center', padding: '20px' }}>
+                    <div style={{ fontSize: '40px', marginBottom: '10px' }}>{method.icon}</div>
+                    <h4 style={{ color: method.color }}>{method.name}</h4>
+                    <p style={{ fontSize: '14px', color: '#666' }}>{method.number}</p>
+                  </div>
+                ))}
+              </div>
+              <div style={{ marginTop: '20px', padding: '15px', background: '#f0f9ff', borderRadius: '8px' }}>
+                <p style={{ color: '#0369a1', fontSize: '14px', margin: 0 }}>
+                  <strong>নোট:</strong> পেমেন্ট করার আগে অনুগ্রহ করে /pricing পেজ থেকে একটি প্যাকেজ নির্বাচন করুন।
+                </p>
+              </div>
             </div>
           </div>
         </section>
@@ -186,12 +222,12 @@ function PaymentContent() {
     <>
       <Header />
       
-      <section className="hero" style={{ padding: '40px 0' }}>
+      <section className="hero" style={{ padding: '40px 0', background: 'linear-gradient(135deg, #1E3D58 0%, #2a4a6a 100%)' }}>
         <div className="hero-container">
           <div className="hero-content">
-            <h1>Make <span>Payment</span></h1>
-            <p className="hero-text">
-              Make manual payment for your selected package
+            <h1 style={{ color: 'white' }}>পেমেন্ট <span style={{ color: '#FF6B35' }}>করুন</span></h1>
+            <p className="hero-text" style={{ color: 'rgba(255,255,255,0.9)' }}>
+              আপনার নির্বাচিত প্যাকেজের জন্য ম্যানুয়াল পেমেন্ট করুন
             </p>
           </div>
         </div>

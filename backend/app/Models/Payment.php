@@ -35,6 +35,7 @@ class Payment extends Model
 
     // Status constants
     const STATUS_PENDING = 'pending';
+    const STATUS_APPROVED = 'approved';
     const STATUS_VERIFIED = 'verified';
     const STATUS_REJECTED = 'rejected';
 
@@ -96,6 +97,32 @@ class Payment extends Model
             $webhookService->syncPaymentVerified($this);
         } catch (\Exception $e) {
             \Illuminate\Support\Facades\Log::error('Webhook sync failed: ' . $e->getMessage());
+        }
+    }
+
+    /**
+     * Approve the payment (without verifying).
+     */
+    public function approve($notes = null)
+    {
+        $this->status = self::STATUS_APPROVED;
+        if ($notes) {
+            $this->notes = $notes;
+        }
+        $this->save();
+
+        // Activate the subscription if exists
+        if ($this->subscription) {
+            $this->subscription = $this->subscription->activate();
+            $this->subscription->load('package');
+            
+            // Sync to external app - subscription activated
+            try {
+                $webhookService = app(WebhookService::class);
+                $webhookService->syncSubscriptionActivated($this->subscription);
+            } catch (\Exception $e) {
+                \Illuminate\Support\Facades\Log::error('Webhook sync failed: ' . $e->getMessage());
+            }
         }
     }
 

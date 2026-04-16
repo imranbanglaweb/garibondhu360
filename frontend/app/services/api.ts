@@ -169,6 +169,18 @@ export const subscriptionAPI = {
   // User - Get payments
   myPayments: () => api.get('/my-payments'),
   payment: (id: number) => api.get(`/my-payments/${id}`),
+
+  // Admin - Get all payments
+  allPayments: (params?: { status?: string; page?: number }) =>
+    api.get('/all-payments', { params }),
+
+  // Admin - Verify payment
+  verifyPayment: (id: number, data: { status: string; notes?: string }) =>
+    api.patch(`/payments/${id}/verify`, data),
+
+  // Admin - Approve payment
+  approvePayment: (id: number, data?: { notes?: string }) =>
+    api.patch(`/payments/${id}/approve`, data),
 };
 
 // Public API (no auth required)

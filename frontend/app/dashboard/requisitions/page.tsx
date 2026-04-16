@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useAuth } from '../../context/AuthContext';
 import { requisitionsAPI, subscriptionAPI } from '../../services/api';
 import Link from 'next/link';
+import Sidebar from '../../components/Sidebar';
 
 interface Requisition {
   id: number;
@@ -105,20 +106,19 @@ export default function RequisitionsPage() {
   const canManageUsers = user?.role === 'admin' || user?.role === 'transport_admin';
   const canApprove = user?.role === 'admin' || user?.role === 'transport_admin' || user?.role === 'department_head';
 
+  const handleApprove = async (id: number) => {
+    try {
+      await requisitionsAPI.update(id, { status: 'approved' });
+      fetchRequisitions();
+    } catch (error) {
+      console.error('Failed to approve requisition:', error);
+    }
+  };
+
   if (loading || loadingData) {
     return (
       <div className="dashboard">
-        <aside className="sidebar">
-          <div style={{ padding: '20px', textAlign: 'center' }}>
-            <h2 style={{ color: 'white' }}>গাড়িবন্ধু ৩৬০</h2>
-            <p style={{ opacity: 0.8, marginTop: '5px' }}>ড্যাশবোর্ড</p>
-          </div>
-          <ul className="sidebar-menu">
-            <li><Link href="/dashboard">ড্যাশবোর্ড</Link></li>
-            <li><Link href="/dashboard/requisitions" className="active">রিকুইজিশন</Link></li>
-            <li><Link href="/dashboard/settings">সেটিংস</Link></li>
-          </ul>
-        </aside>
+        <Sidebar canManageUsers={canManageUsers} />
         <main className="main-content">
           <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh' }}>
             <p>লোড হচ্ছে...</p>
@@ -130,46 +130,7 @@ export default function RequisitionsPage() {
 
   return (
     <div className="dashboard">
-      <aside className="sidebar">
-        <div style={{ padding: '20px', textAlign: 'center' }}>
-          <h2 style={{ color: 'white' }}>গাড়িবন্ধু ৩৬০</h2>
-          <p style={{ opacity: 0.8, marginTop: '5px' }}>ড্যাশবোর্ড</p>
-        </div>
-        <ul className="sidebar-menu">
-          <li><Link href="/dashboard">ড্যাশবোর্ড</Link></li>
-          {canManageUsers && <li><Link href="/dashboard/users">ব্যবহারকারী</Link></li>}
-          <li><Link href="/dashboard/requisitions" className="active">রিকুইজিশন</Link></li>
-          {canManageUsers && (
-            <>
-              <li><Link href="/dashboard/vehicles">গাড়ি</Link></li>
-              <li><Link href="/dashboard/drivers">চালক</Link></li>
-              <li><Link href="/dashboard/reports">রিপোর্ট</Link></li>
-            </>
-          )}
-          <li><Link href="/dashboard/settings">সেটিংস</Link></li>
-          <li>
-            <button
-              onClick={handleLogout}
-              disabled={loggingOut}
-              style={{
-                display: 'block',
-                width: '100%',
-                padding: '12px 15px',
-                borderRadius: '8px',
-                background: 'rgba(231, 76, 60, 0.2)',
-                color: '#ff6b6b',
-                border: 'none',
-                cursor: loggingOut ? 'not-allowed' : 'pointer',
-                textAlign: 'left',
-                fontSize: '14px',
-                opacity: loggingOut ? 0.7 : 1,
-              }}
-            >
-              {loggingOut ? 'লগআউট হচ্ছে...' : 'লগআউট'}
-            </button>
-          </li>
-        </ul>
-      </aside>
+      <Sidebar canManageUsers={canManageUsers} />
 
       <main className="main-content">
         {/* Subscription Notice */}

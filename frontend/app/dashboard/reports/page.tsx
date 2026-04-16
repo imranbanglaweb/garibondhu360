@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '../../context/AuthContext';
 import Link from 'next/link';
+import Sidebar from '../../components/Sidebar';
 
 export default function ReportsPage() {
   const { user, isAuthenticated, loading, logout } = useAuth();
@@ -34,23 +35,8 @@ export default function ReportsPage() {
 
   if (loading) {
     return (
-      <div className="dashboard">
-        <aside className="sidebar">
-          <div style={{ padding: '20px', textAlign: 'center' }}>
-            <h2 style={{ color: 'white' }}>গাড়িবন্ধু ৩৬০</h2>
-            <p style={{ opacity: 0.8, marginTop: '5px' }}>ড্যাশবোর্ড</p>
-          </div>
-          <ul className="sidebar-menu">
-            <li><Link href="/dashboard">ড্যাশবোর্ড</Link></li>
-            <li><Link href="/dashboard/reports" className="active">রিপোর্ট</Link></li>
-            <li><Link href="/dashboard/settings">সেটিংস</Link></li>
-          </ul>
-        </aside>
-        <main className="main-content">
-          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh' }}>
-            <p>লোড হচ্ছে...</p>
-          </div>
-        </main>
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+        <p>লোড হচ্ছে...</p>
       </div>
     );
   }
@@ -58,21 +44,14 @@ export default function ReportsPage() {
   if (!canManageUsers) {
     return (
       <div className="dashboard">
-        <aside className="sidebar">
-          <div style={{ padding: '20px', textAlign: 'center' }}>
-            <h2 style={{ color: 'white' }}>গাড়িবন্ধু ৩৬০</h2>
-            <p style={{ opacity: 0.8, marginTop: '5px' }}>ড্যাশবোর্ড</p>
-          </div>
-          <ul className="sidebar-menu">
-            <li><Link href="/dashboard">ড্যাশবোর্ড</Link></li>
-            <li><Link href="/dashboard/requisitions">রিকুইজিশন</Link></li>
-            <li><Link href="/dashboard/settings">সেটিংস</Link></li>
-          </ul>
-        </aside>
+        <Sidebar canManageUsers={false} />
         <main className="main-content">
           <div style={{ textAlign: 'center', padding: '50px' }}>
             <h2>অনুমোদন প্রয়োজন</h2>
             <p style={{ color: '#666', marginTop: '10px' }}>এই পৃষ্ঠা দেখার জন্য অ্যাডমিন অধিকার প্রয়োজন।</p>
+            <Link href="/dashboard" style={{ color: '#FF6B35', marginTop: '20px', display: 'inline-block' }}>
+              ড্যাশবোর্ডে ফিরে যান
+            </Link>
           </div>
         </main>
       </div>
@@ -80,43 +59,13 @@ export default function ReportsPage() {
   }
 
   return (
-    <div className="dashboard">
-      <aside className="sidebar">
-        <div style={{ padding: '20px', textAlign: 'center' }}>
-          <h2 style={{ color: 'white' }}>গাড়িবন্ধু ৩৬০</h2>
-          <p style={{ opacity: 0.8, marginTop: '5px' }}>ড্যাশবোর্ড</p>
-        </div>
-        <ul className="sidebar-menu">
-          <li><Link href="/dashboard">ড্যাশবোর্ড</Link></li>
-          {canManageUsers && <li><Link href="/dashboard/users">ব্যবহারকারী</Link></li>}
-          <li><Link href="/dashboard/requisitions">রিকুইজিশন</Link></li>
-          <li><Link href="/dashboard/vehicles">গাড়ি</Link></li>
-          <li><Link href="/dashboard/drivers">চালক</Link></li>
-          <li><Link href="/dashboard/reports" className="active">রিপোর্ট</Link></li>
-          <li><Link href="/dashboard/settings">সেটিংস</Link></li>
-          <li>
-            <button
-              onClick={handleLogout}
-              disabled={loggingOut}
-              style={{
-                display: 'block',
-                width: '100%',
-                padding: '12px 15px',
-                borderRadius: '8px',
-                background: 'rgba(231, 76, 60, 0.2)',
-                color: '#ff6b6b',
-                border: 'none',
-                cursor: loggingOut ? 'not-allowed' : 'pointer',
-                textAlign: 'left',
-                fontSize: '14px',
-                opacity: loggingOut ? 0.7 : 1,
-              }}
-            >
-              {loggingOut ? 'লগআউট হচ্ছে...' : 'লগআউট'}
-            </button>
-          </li>
-        </ul>
-      </aside>
+    <>
+      <style jsx>{`
+        .dashboard { display: flex; min-height: 100vh; background: #f8fafc; }
+        .main-content { flex: 1; margin-left: 280px; padding: 30px 40px; }
+      `}</style>
+      <div className="dashboard">
+      <Sidebar canManageUsers={canManageUsers} />
 
       <main className="main-content">
         <div style={{ marginBottom: '30px' }}>
@@ -285,5 +234,6 @@ export default function ReportsPage() {
         </div>
       </main>
     </div>
+    </>
   );
 }

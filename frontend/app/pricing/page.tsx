@@ -80,12 +80,12 @@ export default function Pricing() {
     <>
       <Header />
       
-      <section className="hero" style={{ padding: '60px 0' }}>
+      <section className="hero" style={{ padding: '60px 0', background: 'linear-gradient(135deg, #1E3D58 0%, #2a4a6a 100%)', color: 'white' }}>
         <div className="hero-container">
           <div className="hero-content">
-            <h1>Our <span>Pricing</span></h1>
-            <p className="hero-text">
-              Choose a package that fits your needs.
+            <h1 style={{ color: 'white' }}>আমাদের <span style={{ color: '#FF6B35' }}>প্যাকেজ</span></h1>
+            <p className="hero-text" style={{ color: 'rgba(255,255,255,0.9)' }}>
+              আপনার প্রয়োজন অনুযায়ী একটি প্যাকেজ নির্বাচন করুন
             </p>
           </div>
         </div>

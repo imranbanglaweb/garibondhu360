@@ -103,18 +103,34 @@ export default function RegisterPage() {
 
   const inputStyle = (fieldName: string) => ({
     width: '100%',
-    padding: '12px',
-    border: `1px solid ${errors[fieldName] ? '#dc3545' : '#ddd'}`,
-    borderRadius: '5px',
-    fontSize: '16px',
+    padding: '14px 16px',
+    border: `2px solid ${errors[fieldName] ? '#dc3545' : '#e0e0e0'}`,
+    borderRadius: '10px',
+    fontSize: '15px',
     outline: 'none',
-    transition: 'border-color 0.3s',
+    transition: 'all 0.3s',
+    background: '#fafafa',
   });
 
   return (
-    <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--light-gray)', padding: '50px 0' }}>
-      <div className="auth-container">
-        <h2>রেজিস্টার</h2>
+    <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)', padding: '20px' }}>
+      <div style={{ 
+        background: 'rgba(255, 255, 255, 0.98)', 
+        borderRadius: '20px', 
+        boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.4)',
+        padding: '40px',
+        maxWidth: '450px',
+        width: '100%'
+      }}>
+        <div style={{ textAlign: 'center', marginBottom: '30px' }}>
+          <img 
+            src="/images/logo.png" 
+            alt="গাড়িবন্ধু ৩৬০" 
+            style={{ width: '100px', marginBottom: '12px' }}
+          />
+          <h2 style={{ margin: 0, color: '#1a1a2e', fontSize: '26px', fontWeight: '700' }}>গাড়িবন্ধু ৩৬০</h2>
+          <p style={{ color: '#666', marginTop: '6px', fontSize: '13px' }}>স্মার্ট ট্রান্সপোর্ট ম্যানেজমেন্ট সিস্টেম</p>
+        </div>
         
         <form onSubmit={handleSubmit}>
           <div className="form-group">
@@ -202,14 +218,32 @@ export default function RegisterPage() {
             )}
           </div>
           
-          <button type="submit" className="btn btn-primary" style={{ width: '100%' }} disabled={loading}>
-            {loading ? 'রেজিস্টার হচ্ছে...' : 'রেজিস্টার'}
+          <button type="submit" style={{ 
+            width: '100%', 
+            padding: '14px', 
+            background: 'linear-gradient(135deg, #ff6b35 0%, #f7931e 100%)',
+            color: 'white',
+            border: 'none',
+            borderRadius: '10px',
+            fontSize: '16px',
+            fontWeight: '600',
+            cursor: loading ? 'not-allowed' : 'pointer',
+            opacity: loading ? 0.7 : 1,
+            transition: 'all 0.3s'
+          }} disabled={loading}>
+            {loading ? 'রেজিস্টার হচ্ছে...' : 'রেজিস্টার করুন'}
           </button>
         </form>
         
-        <p style={{ textAlign: 'center', marginTop: '20px' }}>
-          ইতিমধ্যে অ্যাকাউন্ট আছে? <Link href="/login" style={{ color: 'var(--primary-orange)' }}>লগইন করুন</Link>
+        <p style={{ textAlign: 'center', marginTop: '20px', color: '#666' }}>
+          ইতিমধ্যে অ্যাকাউন্ট আছে? <Link href="/login" style={{ color: '#ff6b35', fontWeight: '600' }}>লগইন করুন</Link>
         </p>
+        
+        <div style={{ textAlign: 'center', marginTop: '25px', paddingTop: '20px', borderTop: '1px solid #eee' }}>
+          <p style={{ color: '#999', fontSize: '12px', margin: 0 }}>
+            © ২০২৬ গাড়িবন্ধু ৩৬০। সর্বস্বত্ব সংরক্ষিত।
+          </p>
+        </div>
       </div>
     </div>
   );

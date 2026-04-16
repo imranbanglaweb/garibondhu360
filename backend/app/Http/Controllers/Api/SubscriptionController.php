@@ -9,6 +9,7 @@ use App\Models\Payment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use App\Models\User;
 
 class SubscriptionController extends Controller
 {
@@ -213,6 +214,12 @@ class SubscriptionController extends Controller
      */
     public function allPayments(Request $request)
     {
+        $user = Auth::user();
+        
+        if (!in_array($user->role, [User::ROLE_ADMIN, User::ROLE_TRANSPORT_ADMIN])) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
+
         $payments = Payment::with(['user', 'subscription.package'])
             ->when($request->status, function($query, $status) {
                 return $query->where('status', $status);
@@ -231,6 +238,12 @@ class SubscriptionController extends Controller
      */
     public function verifyPayment(Request $request, $id)
     {
+        $user = Auth::user();
+        
+        if (!in_array($user->role, [User::ROLE_ADMIN, User::ROLE_TRANSPORT_ADMIN])) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
+
         $request->validate([
             'status' => 'required|in:verified,rejected',
             'notes' => 'nullable|string',
@@ -251,6 +264,34 @@ class SubscriptionController extends Controller
             'success' => true,
             'message' => 'Payment status updated successfully',
             'data' => $payment->fresh(['subscription.package']),
+        ]);
+    }
+
+    /**
+     * Approve a payment (admin - mark as approved without verifying).
+     */
+    public function approvePayment(Request $request, $id)
+    {
+        $user = Auth::user();
+        
+        if (!in_array($user->role, [User::ROLE_ADMIN, User::ROLE_TRANSPORT_ADMIN])) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
+
+        $request->validate([
+            'notes' => 'nullable|string',
+        ]);
+
+        $payment = Payment::findOrFail($id);
+        $payment->approve($request->notes);
+        
+        // Load subscription with package
+        $payment->load('subscription.package');
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Payment approved successfully',
+            'data' => $payment,
         ]);
     }
 

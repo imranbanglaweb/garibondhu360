@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useAuth } from '../../context/AuthContext';
 import { usersAPI } from '../../services/api';
 import Link from 'next/link';
+import Sidebar from '../../components/Sidebar';
 
 interface User {
   id: number;
@@ -92,21 +93,7 @@ export default function UsersPage() {
   if (loading || loadingData) {
     return (
       <div className="dashboard">
-        <aside className="sidebar">
-          <div style={{ padding: '20px', textAlign: 'center' }}>
-            <h2 style={{ color: 'white' }}>গাড়িবন্ধু ৩৬০</h2>
-            <p style={{ opacity: 0.8, marginTop: '5px' }}>ড্যাশবোর্ড</p>
-          </div>
-          <ul className="sidebar-menu">
-            <li><Link href="/dashboard">ড্যাশবোর্ড</Link></li>
-            {canManageUsers && <li><Link href="/dashboard/users" className="active">ব্যবহারকারী</Link></li>}
-            <li><Link href="/dashboard/requisitions">রিকুইজিশন</Link></li>
-            <li><Link href="/dashboard/vehicles">গাড়ি</Link></li>
-            <li><Link href="/dashboard/drivers">চালক</Link></li>
-            <li><Link href="/dashboard/reports">রিপোর্ট</Link></li>
-            <li><Link href="/dashboard/settings">সেটিংস</Link></li>
-          </ul>
-        </aside>
+        <Sidebar canManageUsers={canManageUsers} />
         <main className="main-content">
           <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh' }}>
             <p>লোড হচ্ছে...</p>
@@ -119,25 +106,12 @@ export default function UsersPage() {
   if (!canManageUsers) {
     return (
       <div className="dashboard">
-        <aside className="sidebar">
-          <div style={{ padding: '20px', textAlign: 'center' }}>
-            <h2 style={{ color: 'white' }}>গাড়িবন্ধু ৩৬০</h2>
-            <p style={{ opacity: 0.8, marginTop: '5px' }}>ড্যাশবোর্ড</p>
-          </div>
-          <ul className="sidebar-menu">
-            <li><Link href="/dashboard">ড্যাশবোর্ড</Link></li>
-            <li><Link href="/dashboard/requisitions">রিকুইজিশন</Link></li>
-            <li><Link href="/dashboard/vehicles">গাড়ি</Link></li>
-            <li><Link href="/dashboard/drivers">চালক</Link></li>
-            <li><Link href="/dashboard/reports">রিপোর্ট</Link></li>
-            <li><Link href="/dashboard/settings">সেটিংস</Link></li>
-          </ul>
-        </aside>
+        <Sidebar canManageUsers={false} />
         <main className="main-content">
           <div style={{ textAlign: 'center', padding: '50px' }}>
             <h2>অনুমোদন প্রয়োজন</h2>
             <p style={{ color: '#666', marginTop: '10px' }}>এই পৃষ্ঠা দেখার জন্য আপনার অ্যাডমিন অধিকার প্রয়োজন।</p>
-            <Link href="/dashboard" style={{ color: 'var(--primary-orange)', marginTop: '20px', display: 'inline-block' }}>
+            <Link href="/dashboard" style={{ color: '#FF6B35', marginTop: '20px', display: 'inline-block' }}>
               ড্যাশবোর্ডে ফিরে যান
             </Link>
           </div>
@@ -148,21 +122,7 @@ export default function UsersPage() {
 
   return (
     <div className="dashboard">
-      <aside className="sidebar">
-        <div style={{ padding: '20px', textAlign: 'center' }}>
-          <h2 style={{ color: 'white' }}>গাড়িবন্ধু ৩৬০</h2>
-          <p style={{ opacity: 0.8, marginTop: '5px' }}>ড্যাশবোর্ড</p>
-        </div>
-        <ul className="sidebar-menu">
-          <li><Link href="/dashboard">ড্যাশবোর্ড</Link></li>
-          {canManageUsers && <li><Link href="/dashboard/users" className="active">ব্যবহারকারী</Link></li>}
-          <li><Link href="/dashboard/requisitions">রিকুইজিশন</Link></li>
-          <li><Link href="/dashboard/vehicles">গাড়ি</Link></li>
-          <li><Link href="/dashboard/drivers">চালক</Link></li>
-          <li><Link href="/dashboard/reports">রিপোর্ট</Link></li>
-          <li><Link href="/dashboard/settings">সেটিংস</Link></li>
-        </ul>
-      </aside>
+      <Sidebar canManageUsers={canManageUsers} />
 
       <main className="main-content">
         <div style={{ marginBottom: '30px' }}>

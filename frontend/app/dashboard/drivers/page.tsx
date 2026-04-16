@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '../../context/AuthContext';
 import { driversAPI } from '../../services/api';
+import Sidebar from '../../components/Sidebar';
 import Link from 'next/link';
 
 interface Driver {
@@ -96,17 +97,7 @@ export default function DriversPage() {
   if (loading || loadingData) {
     return (
       <div className="dashboard">
-        <aside className="sidebar">
-          <div style={{ padding: '20px', textAlign: 'center' }}>
-            <h2 style={{ color: 'white' }}>গাড়িবন্ধু ৩৬০</h2>
-            <p style={{ opacity: 0.8, marginTop: '5px' }}>ড্যাশবোর্ড</p>
-          </div>
-          <ul className="sidebar-menu">
-            <li><Link href="/dashboard">ড্যাশবোর্ড</Link></li>
-            <li><Link href="/dashboard/drivers" className="active">চালক</Link></li>
-            <li><Link href="/dashboard/settings">সেটিংস</Link></li>
-          </ul>
-        </aside>
+        <Sidebar canManageUsers={canManageUsers} />
         <main className="main-content">
           <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh' }}>
             <p>লোড হচ্ছে...</p>
@@ -119,17 +110,7 @@ export default function DriversPage() {
   if (!canManageUsers) {
     return (
       <div className="dashboard">
-        <aside className="sidebar">
-          <div style={{ padding: '20px', textAlign: 'center' }}>
-            <h2 style={{ color: 'white' }}>গাড়িবন্ধু ৩৬০</h2>
-            <p style={{ opacity: 0.8, marginTop: '5px' }}>ড্যাশবোর্ড</p>
-          </div>
-          <ul className="sidebar-menu">
-            <li><Link href="/dashboard">ড্যাশবোর্ড</Link></li>
-            <li><Link href="/dashboard/requisitions">রিকুইজিশন</Link></li>
-            <li><Link href="/dashboard/settings">সেটিংস</Link></li>
-          </ul>
-        </aside>
+        <Sidebar canManageUsers={false} />
         <main className="main-content">
           <div style={{ textAlign: 'center', padding: '50px' }}>
             <h2>অনুমোদন প্রয়োজন</h2>
@@ -142,42 +123,7 @@ export default function DriversPage() {
 
   return (
     <div className="dashboard">
-      <aside className="sidebar">
-        <div style={{ padding: '20px', textAlign: 'center' }}>
-          <h2 style={{ color: 'white' }}>গাড়িবন্ধু ৩৬০</h2>
-          <p style={{ opacity: 0.8, marginTop: '5px' }}>ড্যাশবোর্ড</p>
-        </div>
-        <ul className="sidebar-menu">
-          <li><Link href="/dashboard">ড্যাশবোর্ড</Link></li>
-          {canManageUsers && <li><Link href="/dashboard/users">ব্যবহারকারী</Link></li>}
-          <li><Link href="/dashboard/requisitions">রিকুইজিশন</Link></li>
-          <li><Link href="/dashboard/vehicles">গাড়ি</Link></li>
-          <li><Link href="/dashboard/drivers" className="active">চালক</Link></li>
-          <li><Link href="/dashboard/reports">রিপোর্ট</Link></li>
-          <li><Link href="/dashboard/settings">সেটিংস</Link></li>
-          <li>
-            <button
-              onClick={handleLogout}
-              disabled={loggingOut}
-              style={{
-                display: 'block',
-                width: '100%',
-                padding: '12px 15px',
-                borderRadius: '8px',
-                background: 'rgba(231, 76, 60, 0.2)',
-                color: '#ff6b6b',
-                border: 'none',
-                cursor: loggingOut ? 'not-allowed' : 'pointer',
-                textAlign: 'left',
-                fontSize: '14px',
-                opacity: loggingOut ? 0.7 : 1,
-              }}
-            >
-              {loggingOut ? 'লগআউট হচ্ছে...' : 'লগআউট'}
-            </button>
-          </li>
-        </ul>
-      </aside>
+      <Sidebar canManageUsers={canManageUsers} />
 
       <main className="main-content">
         <div style={{ marginBottom: '30px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '20px' }}>

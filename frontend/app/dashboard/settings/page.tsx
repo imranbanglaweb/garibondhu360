@@ -1,15 +1,62 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '../../context/AuthContext';
 import Link from 'next/link';
+import { subscriptionAPI } from '../../services/api';
+import Sidebar from '../../components/Sidebar';
 
 export default function SettingsPage() {
   const { user, isAuthenticated, loading, logout } = useAuth();
   const router = useRouter();
   const [loggingOut, setLoggingOut] = useState(false);
   const [activeTab, setActiveTab] = useState('profile');
+  const [payments, setPayments] = useState<any[]>([]);
+  const [loadingPayments, setLoadingPayments] = useState(false);
+
+  const canManagePayments = user?.role === 'admin' || user?.role === 'transport_admin';
+
+  const loadPayments = useCallback(async () => {
+    setLoadingPayments(true);
+    try {
+      const res = await subscriptionAPI.allPayments();
+      console.log('All payments response:', res);
+      // Laravel paginate wraps in 'data.data.data' (response.data -> success wrapper, .data -> paginator, .data -> items)
+      const paymentData = res?.data?.data?.data || res?.data?.data || [];
+      console.log('Payment data:', paymentData);
+      setPayments(Array.isArray(paymentData) ? paymentData : []);
+    } catch (error: any) {
+      console.error('Failed to load payments:', error?.response?.data || error);
+      setPayments([]);
+    } finally {
+      setLoadingPayments(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (canManagePayments) {
+      loadPayments();
+    }
+  }, [canManagePayments, loadPayments]);
+
+  const handleApprovePayment = async (paymentId: number) => {
+    try {
+      await subscriptionAPI.approvePayment(paymentId);
+      loadPayments();
+    } catch (error) {
+      console.error('Failed to approve payment:', error);
+    }
+  };
+
+  const handleVerifyPayment = async (paymentId: number) => {
+    try {
+      await subscriptionAPI.verifyPayment(paymentId, { status: 'verified' });
+      loadPayments();
+    } catch (error) {
+      console.error('Failed to verify payment:', error);
+    }
+  };
 
   useEffect(() => {
     if (!loading && !isAuthenticated) {
@@ -45,16 +92,7 @@ export default function SettingsPage() {
   if (loading) {
     return (
       <div className="dashboard">
-        <aside className="sidebar">
-          <div style={{ padding: '20px', textAlign: 'center' }}>
-            <h2 style={{ color: 'white' }}>গাড়িবন্ধু ৩৬০</h2>
-            <p style={{ opacity: 0.8, marginTop: '5px' }}>ড্যাশবোর্ড</p>
-          </div>
-          <ul className="sidebar-menu">
-            <li><Link href="/dashboard">ড্যাশবোর্ড</Link></li>
-            <li><Link href="/dashboard/settings" className="active">সেটিংস</Link></li>
-          </ul>
-        </aside>
+        <Sidebar canManageUsers={canManageUsers} />
         <main className="main-content">
           <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh' }}>
             <p>লোড হচ্ছে...</p>
@@ -64,48 +102,26 @@ export default function SettingsPage() {
     );
   }
 
+  if (!canManageUsers) {
+    return (
+      <div className="dashboard">
+        <Sidebar canManageUsers={false} />
+        <main className="main-content">
+          <div style={{ textAlign: 'center', padding: '50px' }}>
+            <h2>অনুমোদন প্রয়োজন</h2>
+            <p style={{ color: '#666', marginTop: '10px' }}>এই পৃষ্ঠা দেখার জন্য আপনার অ্যাডমিন অধিকার প্রয়োজন।</p>
+            <Link href="/dashboard" style={{ color: '#FF6B35', marginTop: '20px', display: 'inline-block' }}>
+              ড্যাশবোর্ডে ফিরে যান
+            </Link>
+          </div>
+        </main>
+      </div>
+    );
+  }
+
   return (
     <div className="dashboard">
-      <aside className="sidebar">
-        <div style={{ padding: '20px', textAlign: 'center' }}>
-          <h2 style={{ color: 'white' }}>গাড়িবন্ধু ৩৬০</h2>
-          <p style={{ opacity: 0.8, marginTop: '5px' }}>ড্যাশবোর্ড</p>
-        </div>
-        <ul className="sidebar-menu">
-          <li><Link href="/dashboard">ড্যাশবোর্ড</Link></li>
-          {canManageUsers && <li><Link href="/dashboard/users">ব্যবহারকারী</Link></li>}
-          <li><Link href="/dashboard/requisitions">রিকুইজিশন</Link></li>
-          {canManageUsers && (
-            <>
-              <li><Link href="/dashboard/vehicles">গাড়ি</Link></li>
-              <li><Link href="/dashboard/drivers">চালক</Link></li>
-              <li><Link href="/dashboard/reports">রিপোর্ট</Link></li>
-            </>
-          )}
-          <li><Link href="/dashboard/settings" className="active">সেটিংস</Link></li>
-          <li>
-            <button
-              onClick={handleLogout}
-              disabled={loggingOut}
-              style={{
-                display: 'block',
-                width: '100%',
-                padding: '12px 15px',
-                borderRadius: '8px',
-                background: 'rgba(231, 76, 60, 0.2)',
-                color: '#ff6b6b',
-                border: 'none',
-                cursor: loggingOut ? 'not-allowed' : 'pointer',
-                textAlign: 'left',
-                fontSize: '14px',
-                opacity: loggingOut ? 0.7 : 1,
-              }}
-            >
-              {loggingOut ? 'লগআউট হচ্ছে...' : 'লগআউট'}
-            </button>
-          </li>
-        </ul>
-      </aside>
+      <Sidebar canManageUsers={canManageUsers} />
 
       <main className="main-content">
         <div style={{ marginBottom: '30px' }}>
@@ -157,6 +173,22 @@ export default function SettingsPage() {
           >
             নোটিফিকেশন
           </button>
+          {canManagePayments && (
+            <button
+              onClick={() => setActiveTab('payments')}
+              style={{
+                padding: '10px 20px',
+                borderRadius: '8px',
+                background: activeTab === 'payments' ? 'var(--primary-orange)' : 'transparent',
+                color: activeTab === 'payments' ? 'white' : 'var(--dark-gray)',
+                border: 'none',
+                cursor: 'pointer',
+                fontWeight: '500'
+              }}
+            >
+              পেমেন্ট ম্যানেজমেন্ট
+            </button>
+          )}
         </div>
 
         {/* Profile Tab */}
@@ -332,6 +364,123 @@ export default function SettingsPage() {
             >
               সেটিংস সংরক্ষণ করুন
             </button>
+          </div>
+        )}
+
+        {/* Payments Tab (Admin Only) */}
+        {activeTab === 'payments' && (
+          <div style={{ backgroundColor: 'white', padding: '30px', borderRadius: '15px', boxShadow: 'var(--shadow)' }}>
+            <h3 style={{ marginBottom: '25px' }}>পেমেন্ট ম্যানেজমেন্ট</h3>
+            
+            {loadingPayments ? (
+              <p>লোড হচ্ছে...</p>
+            ) : !Array.isArray(payments) || payments.length === 0 ? (
+              <p style={{ color: '#666' }}>কোনো পেমেন্ট পাওয়া যায়নি</p>
+            ) : (
+              <div style={{ overflowX: 'auto' }}>
+                <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                  <thead>
+                    <tr style={{ borderBottom: '2px solid var(--light-gray)' }}>
+                      <th style={{ padding: '12px', textAlign: 'left' }}>তারিখ</th>
+                      <th style={{ padding: '12px', textAlign: 'left' }}>ব্যবহারকারী</th>
+                      <th style={{ padding: '12px', textAlign: 'left' }}>প্যাকেজ</th>
+                      <th style={{ padding: '12px', textAlign: 'left' }}>পেমেন্ট মেথড</th>
+                      <th style={{ padding: '12px', textAlign: 'left' }}>ট্রানজ্যাকশন আইডি</th>
+                      <th style={{ padding: '12px', textAlign: 'left' }}>টাকা</th>
+                      <th style={{ padding: '12px', textAlign: 'left' }}>স্ট্যাটাস</th>
+                      <th style={{ padding: '12px', textAlign: 'left' }}>অ্যাকশন</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {payments.map((payment: any) => (
+                      <tr key={payment.id} style={{ borderBottom: '1px solid var(--light-gray)' }}>
+                        <td style={{ padding: '12px' }}>
+                          {new Date(payment.created_at).toLocaleDateString('bn-BD')}
+                        </td>
+                        <td style={{ padding: '12px' }}>
+                          {payment.customer_name || payment.user?.name || 'N/A'}
+                        </td>
+                        <td style={{ padding: '12px' }}>
+                          {payment.subscription?.package?.name || 'N/A'}
+                        </td>
+                        <td style={{ padding: '12px' }}>
+                          {payment.payment_method?.toUpperCase()}
+                        </td>
+                        <td style={{ padding: '12px' }}>{payment.transaction_id}</td>
+                        <td style={{ padding: '12px' }}>৳{payment.amount}</td>
+                        <td style={{ padding: '12px' }}>
+                          <span style={{
+                            padding: '4px 8px',
+                            borderRadius: '4px',
+                            backgroundColor: payment.status === 'verified' ? '#27ae60' : 
+                              payment.status === 'approved' ? '#3498db' : 
+                              payment.status === 'rejected' ? '#e74c3c' : '#f39c12',
+                            color: 'white',
+                            fontSize: '12px'
+                          }}>
+                            {payment.status === 'verified' ? 'ভেরিফাইড' : 
+                             payment.status === 'approved' ? 'অনুমোদিত' : 
+                             payment.status === 'rejected' ? 'প্রত্যাখ্যাত' : 'অপেক্ষায়'}
+                          </span>
+                        </td>
+                        <td style={{ padding: '12px' }}>
+                          <div style={{ display: 'flex', gap: '8px' }}>
+                            {payment.status === 'pending' && (
+                              <>
+                                <button
+                                  onClick={() => handleApprovePayment(payment.id)}
+                                  style={{
+                                    padding: '6px 12px',
+                                    backgroundColor: '#3498db',
+                                    color: 'white',
+                                    border: 'none',
+                                    borderRadius: '4px',
+                                    cursor: 'pointer',
+                                    fontSize: '12px'
+                                  }}
+                                >
+                                  অনুমোদন
+                                </button>
+                                <button
+                                  onClick={() => handleVerifyPayment(payment.id)}
+                                  style={{
+                                    padding: '6px 12px',
+                                    backgroundColor: '#27ae60',
+                                    color: 'white',
+                                    border: 'none',
+                                    borderRadius: '4px',
+                                    cursor: 'pointer',
+                                    fontSize: '12px'
+                                  }}
+                                >
+                                  ভেরিফাই
+                                </button>
+                              </>
+                            )}
+                            {payment.status === 'approved' && (
+                              <button
+                                onClick={() => handleVerifyPayment(payment.id)}
+                                style={{
+                                  padding: '6px 12px',
+                                  backgroundColor: '#27ae60',
+                                  color: 'white',
+                                  border: 'none',
+                                  borderRadius: '4px',
+                                  cursor: 'pointer',
+                                  fontSize: '12px'
+                                }}
+                              >
+                                ভেরিফাই
+                              </button>
+                            )}
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
           </div>
         )}
       </main>
